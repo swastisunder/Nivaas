@@ -3,9 +3,10 @@
   <div class="col-8 offset-2">
     <h1>Create a New Listing</h1>
     <br />
-    <form action="/listings" method="POST">
+    <form action="/listings" method="POST" novalidate class="needs-validation">
+      <!-- Title -->
       <div class="mb-3">
-        <label for="title" class="form-label">Title</label>
+        <label for="title" class="form-label">Title *</label>
         <input
           id="title"
           type="text"
@@ -14,10 +15,13 @@
           required
           class="form-control"
         />
+        <div class="valid-feedback">Title looks good.</div>
+        <div class="invalid-feedback">Enter a title.</div>
       </div>
 
+      <!-- Description -->
       <div class="mb-3">
-        <label for="description" class="form-label">Description</label>
+        <label for="description" class="form-label">Description *</label>
         <textarea
           id="description"
           name="description"
@@ -25,8 +29,11 @@
           required
           class="form-control"
         ></textarea>
+        <div class="valid-feedback">Description added.</div>
+        <div class="invalid-feedback">Add a short description.</div>
       </div>
 
+      <!-- Image URL -->
       <div class="mb-3">
         <label for="image" class="form-label">Image URL</label>
         <input
@@ -36,34 +43,43 @@
           placeholder="Image URL"
           class="form-control"
         />
+        <div class="valid-feedback">Image link looks fine.</div>
+        <div class="invalid-feedback">Enter a valid image URL.</div>
       </div>
+
+      <!-- Price, Location, Country -->
       <div class="row">
         <div class="mb-3 col-4">
-          <label for="price" class="form-label">Price</label>
+          <label for="price" class="form-label">Price *</label>
           <input
             id="price"
             type="number"
             name="price"
-            placeholder="1,200"
+            min="500"
+            placeholder="Minimum 500"
             required
             class="form-control"
           />
+          <div class="valid-feedback">Price set.</div>
+          <div class="invalid-feedback">Enter a price.</div>
         </div>
 
         <div class="mb-3 col-4">
-          <label for="location" class="form-label">Location</label>
+          <label for="location" class="form-label">Location *</label>
           <input
             id="location"
             type="text"
             name="location"
-            placeholder="Surat, Gujrat"
+            placeholder="Surat, Gujarat"
             required
             class="form-control"
           />
+          <div class="valid-feedback">Location added.</div>
+          <div class="invalid-feedback">Enter location.</div>
         </div>
 
         <div class="mb-3 col-4">
-          <label for="country" class="form-label">Country</label>
+          <label for="country" class="form-label">Country *</label>
           <input
             id="country"
             type="text"
@@ -72,11 +88,17 @@
             required
             class="form-control"
           />
+          <div class="valid-feedback">Country noted.</div>
+          <div class="invalid-feedback">Enter country name.</div>
         </div>
       </div>
+
+      <!-- Submit -->
       <div>
         <br />
-        <button type="submit" class="btn btn-dark add-btn">Create New Listing</button>
+        <button type="submit" class="btn btn-dark add-btn">
+          Create New Listing
+        </button>
         <br /><br /><br />
       </div>
     </form>

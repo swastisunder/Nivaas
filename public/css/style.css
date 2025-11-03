@@ -10,6 +10,7 @@ body {
   min-height: 100vh;
   background-color: #f9fafb;
   color: #222;
+  /* user-select: none; */
 }
 
 .container {
