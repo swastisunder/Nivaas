@@ -1,0 +1,13 @@
+<% if (success && success.length > 0) { %>
+<div class="custom-toast alert alert-success fade show" id="flashAlert">
+  <i class="bi bi-check-circle-fill"></i>
+  <%= success %>
+</div>
+<% } %>
+
+<% if (error && error.length > 0) { %>
+<div class="custom-toast alert alert-danger fade show" id="flashAlert">
+  <i class="bi bi-x-circle-fill"></i>
+  <%= error %>
+</div>
+<% } %>

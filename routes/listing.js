@@ -35,7 +35,10 @@ router.get(
   warpAsync(async (req, res) => {
     const { id } = req.params;
     const listing = await Listing.findById(id).populate("reviews");
-    if (!listing) throw new ExpressError(404, "Listing Not Found");
+    if (!listing) {
+      req.flash("error", "Listing does not exist!");
+      return res.redirect("/listings");
+    }
     res.render("listings/show.ejs", { listing });
   })
 );
@@ -47,6 +50,7 @@ router.post(
   warpAsync(async (req, res) => {
     const newListing = new Listing(req.body);
     await newListing.save();
+    req.flash("success", "New listing created");
     res.redirect(`/listings/${newListing._id}`);
   })
 );
@@ -57,7 +61,10 @@ router.get(
   warpAsync(async (req, res) => {
     const { id } = req.params;
     const listing = await Listing.findById(id);
-    if (!listing) throw new ExpressError(404, "Listing Not Found");
+    if (!listing) {
+      req.flash("error", "Listing does not exist!");
+      return res.redirect("/listings");
+    }
     res.render("listings/edit.ejs", { listing });
   })
 );
@@ -69,6 +76,7 @@ router.put(
   warpAsync(async (req, res) => {
     const { id } = req.params;
     await Listing.findByIdAndUpdate(id, req.body, { runValidators: true });
+    req.flash("success", "Listing Updated!");
     res.redirect(`/listings/${id}`);
   })
 );
@@ -79,6 +87,7 @@ router.delete(
   warpAsync(async (req, res) => {
     const { id } = req.params;
     await Listing.findByIdAndDelete(id);
+    req.flash("success", "Listing Deleted!");
     res.redirect("/listings");
   })
 );

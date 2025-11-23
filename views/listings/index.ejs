@@ -6,7 +6,11 @@
     <% for (const listing of listings) {%>
     <a href="/listings/<%=listing._id%>" class="listing-link">
       <div class="card col listing-card">
-        <img src="<%=listing.image%>" class="card-img-top home-images" alt="listing img" />
+        <img
+          src="<%=listing.image%>"
+          class="card-img-top home-images"
+          alt="listing img"
+        />
         <div class="card-img-overlay"></div>
         <div class="card-body">
           <h5 class="card-title"><%=listing.title%></h5>

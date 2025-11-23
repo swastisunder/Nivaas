@@ -130,7 +130,11 @@
                   <div class="card-text"><%= review.comment %></div>
                   <div class="card-text"><%= review.rating %> Star</div>
                 </div>
-                <form class="mb-3" method="POST" action="/listings/<%=listing._id%>/reviews/<%=review._id%>?_method=DELETE">
+                <form
+                  class="mb-3"
+                  method="POST"
+                  action="/listings/<%=listing._id%>/reviews/<%=review._id%>?_method=DELETE"
+                >
                   <button class="btn btn-sm btn-danger">Delete</button>
                 </form>
               </div>
