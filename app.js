@@ -6,10 +6,15 @@ const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const ExpressError = require("./utils/ExpressError");
-const listings = require("./routes/listing.js");
-const reviews = require("./routes/reviews.js");
 const session = require("express-session");
 const flash = require("connect-flash");
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
+const User = require("./model/user.js");
+
+const listingsRouter = require("./routes/listing.js");
+const reviewsRouter = require("./routes/reviews.js");
+const usersRouter = require("./routes/user.js");
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -17,6 +22,16 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.engine("ejs", ejsMate);
+
+const mongoURI = "mongodb://127.0.0.1:27017/nivaas";
+
+main()
+  .then(() => console.log("DB Connected"))
+  .catch((err) => console.log(err));
+
+async function main() {
+  await mongoose.connect(mongoURI);
+}
 
 const sessionOptions = {
   secret: "mysupersecretcode",
@@ -29,18 +44,15 @@ const sessionOptions = {
   },
 };
 
-const mongoURI = "mongodb://127.0.0.1:27017/nivaas";
-
-main()
-  .then(() => console.log("DB Connected"))
-  .catch((err) => console.log(err));
-
-async function main() {
-  await mongoose.connect(mongoURI);
-}
-
 app.use(session(sessionOptions));
 app.use(flash());
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 app.use((req, res, next) => {
   res.locals.success = req.flash("success");
@@ -53,8 +65,9 @@ app.get("/", (req, res) => {
   res.send("Hello, World!");
 });
 
-app.use("/listings", listings);
-app.use("/listings/:id/reviews", reviews);
+app.use("/listings", listingsRouter);
+app.use("/listings/:id/reviews", reviewsRouter);
+app.use("/", usersRouter);
 
 // 404 — Page Not Found
 app.all(/.*/, (req, res, next) => {
