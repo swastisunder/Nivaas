@@ -25,8 +25,7 @@
 setTimeout(() => {
   const alert = document.getElementById("flashAlert");
   if (alert) {
-    alert.classList.remove("show");
-    alert.style.opacity = "0";
-    setTimeout(() => alert.remove(), 500);
+    alert.classList.add("hide"); // triggers slide-out animation
+    setTimeout(() => alert.remove(), 500); // wait for animation to finish
   }
-}, 3000); // 3 seconds
+}, 3000); // auto close after 3 sec

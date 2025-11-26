@@ -1,19 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const warpAsync = require("../utils/warpAsync");
-const ExpressError = require("../utils/ExpressError");
-const { listingSchema } = require("../schema");
 const Listing = require("../model/listing");
-
-const validateListing = (req, res, next) => {
-  let { error } = listingSchema.validate(req.body);
-  if (error) {
-    let errMsg = error.details.map((e) => e.message).join(",");
-    throw new ExpressError(400, errMsg);
-  } else {
-    next();
-  }
-};
+const { isLoggedIn, isOwner, validateListing } = require("../middleware");
 
 // READ — Show All Listings +
 router.get(
@@ -25,7 +14,7 @@ router.get(
 );
 
 // CREATE — New Listing Form +
-router.get("/new", (req, res) => {
+router.get("/new", isLoggedIn, (req, res) => {
   res.render("listings/new.ejs");
 });
 
@@ -34,7 +23,9 @@ router.get(
   "/:id",
   warpAsync(async (req, res) => {
     const { id } = req.params;
-    const listing = await Listing.findById(id).populate("reviews");
+    const listing = await Listing.findById(id)
+      .populate({ path: "reviews", populate: { path: "author" } })
+      .populate("owner");
     if (!listing) {
       req.flash("error", "Listing does not exist!");
       return res.redirect("/listings");
@@ -46,9 +37,11 @@ router.get(
 // CREATE — Submit New Listing
 router.post(
   "/",
+  isLoggedIn,
   validateListing,
   warpAsync(async (req, res) => {
     const newListing = new Listing(req.body);
+    newListing.owner = req.user._id;
     await newListing.save();
     req.flash("success", "New listing created");
     res.redirect(`/listings/${newListing._id}`);
@@ -58,6 +51,8 @@ router.post(
 // UPDATE — Edit Listing Form +
 router.get(
   "/:id/edit",
+  isLoggedIn,
+  isOwner,
   warpAsync(async (req, res) => {
     const { id } = req.params;
     const listing = await Listing.findById(id);
@@ -72,9 +67,12 @@ router.get(
 // UPDATE — Submit Edited Listing +
 router.put(
   "/:id",
+  isLoggedIn,
+  isOwner,
   validateListing,
   warpAsync(async (req, res) => {
     const { id } = req.params;
+    let listing = await Listing.findById(id);
     await Listing.findByIdAndUpdate(id, req.body, { runValidators: true });
     req.flash("success", "Listing Updated!");
     res.redirect(`/listings/${id}`);
@@ -84,6 +82,8 @@ router.put(
 // DELETE — Remove Listing
 router.delete(
   "/:id",
+  isLoggedIn,
+  isOwner,
   warpAsync(async (req, res) => {
     const { id } = req.params;
     await Listing.findByIdAndDelete(id);
