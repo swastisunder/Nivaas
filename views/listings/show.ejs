@@ -202,8 +202,53 @@
             </div>
             <% } %>
           </div>
+
+          <div class="mt-5">
+            <h4 class="fw-semibold mb-3">Location on Map</h4>
+            <div id="map" style="height: 350px; border-radius: 12px"></div>
+          </div>
+          <div class="text-center mt-3">
+            <a
+              href="https://www.google.com/maps/search/?api=1&query=<%= encodeURIComponent(listing.title + ', ' + listing.location + ', ' + listing.country) %>"
+              target="_blank"
+              class="btn btn-danger px-4 py-2 rounded-pill fw-semibold"
+            >
+              Open in Maps
+            </a>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<script>
+  const address = "<%= listing.location %>, <%= listing.country %>";
+
+  fetch(
+    `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
+      address
+    )}`
+  )
+    .then((response) => response.json())
+    .then((data) => {
+      if (data && data.length > 0) {
+        const lat = data[0].lat;
+        const lon = data[0].lon;
+
+        const map = L.map("map").setView([lat, lon], 15);
+
+        L.tileLayer(
+          "https://tiles.stadiamaps.com/tiles/outdoors/{z}/{x}/{y}{r}.png",
+          { attribution: "© Stadia Maps" }
+        ).addTo(map);
+
+        L.marker([lat, lon])
+          .addTo(map)
+          .bindPopup("<b><%= listing.title %></b>")
+          .openPopup();
+      } else {
+        console.error("Location not found:", address);
+      }
+    });
+</script>
