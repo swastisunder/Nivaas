@@ -11,11 +11,19 @@ const {
   updateListing,
   destoryListing,
 } = require("../controllers/listings");
+const multer = require("multer");
+const { cloudinary, storage } = require("../cloudConfig");
+const upload = multer({ storage });
 
 router
   .route("/")
   .get(warpAsync(index))
-  .post(isLoggedIn, validateListing, warpAsync(createListing));
+  .post(
+    isLoggedIn,
+    validateListing,
+    upload.single("listing[image]"),
+    warpAsync(createListing)
+  );
 
 router.get("/new", isLoggedIn, renderNewForm);
 
