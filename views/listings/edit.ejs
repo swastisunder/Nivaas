@@ -10,6 +10,7 @@
       method="POST"
       novalidate
       class="needs-validation"
+      enctype="multipart/form-data"
     >
       <!-- Title -->
       <div class="mb-3">
@@ -43,19 +44,18 @@
         <div class="invalid-feedback">Add a short description.</div>
       </div>
 
-      <!-- Image URL -->
+      <!-- Image Upload -->
       <div class="mb-3">
-        <label for="image" class="form-label">Image URL *</label>
-        <input
-          id="image"
-          type="text"
-          name="image"
-          placeholder="Image URL"
-          value="<%= listing.image %>"
-          class="form-control"
-        />
-        <div class="valid-feedback">Image link looks fine.</div>
-        <div class="invalid-feedback">Enter a valid image URL.</div>
+        <label for="image" class="form-label">Upload Listing Image</label>
+        <input id="image" type="file" name="listing[image]" class="form-control" accept="image/*" />
+        <% if (listing.image && listing.image.url) { %>
+        <div class="mt-2">
+          <small class="text-muted">Current image:</small>
+          <img src="<%= listing.image.url %>" alt="Current listing image" class="img-thumbnail mt-2" style="max-width: 200px; max-height: 200px; object-fit: cover;" />
+        </div>
+        <% } %>
+        <div class="valid-feedback">Image looks fine.</div>
+        <div class="invalid-feedback">Upload a valid image.</div>
       </div>
 
       <!-- Price, Location, Country -->

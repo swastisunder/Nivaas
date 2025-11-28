@@ -30,7 +30,13 @@ router.get("/new", isLoggedIn, renderNewForm);
 router
   .route("/:id")
   .get(warpAsync(showListings))
-  .put(isLoggedIn, isOwner, validateListing, warpAsync(updateListing))
+  .put(
+    isLoggedIn,
+    isOwner,
+    upload.single("listing[image]"),
+    validateListing,
+    warpAsync(updateListing)
+  )
   .delete(isLoggedIn, isOwner, warpAsync(destoryListing));
 
 router.get("/:id/edit", isLoggedIn, isOwner, warpAsync(renderEditForm));

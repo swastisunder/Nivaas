@@ -63,6 +63,7 @@ app.use((req, res, next) => {
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
   res.locals.currUser = req.user;
+  res.locals.googleMapsApiKey = process.env.GOOGLE_MAPS_API_KEY || "";
   next();
 });
 

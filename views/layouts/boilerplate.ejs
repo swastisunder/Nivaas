@@ -33,6 +33,12 @@
       integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
       crossorigin="anonymous"
     ></script>
+    <% if (typeof googleMapsApiKey !== "undefined" && googleMapsApiKey) { %>
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=<%= googleMapsApiKey %>&libraries=maps,marker&v=weekly"
+      defer
+    ></script>
+    <% } %>
     <script src="/js/script.js"></script>
   </body>
 </html>

@@ -1,4 +1,5 @@
 const Listing = require("../model/listing");
+const { cloudinary } = require("../cloudConfig");
 
 module.exports.index = async (req, res) => {
   const listings = await Listing.find({});
@@ -23,7 +24,7 @@ module.exports.showListings = async (req, res) => {
 
 module.exports.createListing = async (req, res) => {
   let url = req.file.path;
-  let fileName = req.file.fileName;
+  let fileName = req.file.filename;
   const newListing = new Listing(req.body);
   newListing.owner = req.user._id;
   newListing.image = { url, fileName };
@@ -45,7 +46,33 @@ module.exports.renderEditForm = async (req, res) => {
 module.exports.updateListing = async (req, res) => {
   const { id } = req.params;
   let listing = await Listing.findById(id);
-  await Listing.findByIdAndUpdate(id, req.body, { runValidators: true });
+  
+  // If a new image is uploaded
+  if (req.file) {
+    // Delete old image from Cloudinary if it exists
+    if (listing.image && listing.image.fileName) {
+      try {
+        await cloudinary.uploader.destroy(listing.image.fileName);
+      } catch (error) {
+        console.error("Error deleting old image:", error);
+      }
+    }
+    
+    // Update with new image
+    listing.image = {
+      url: req.file.path,
+      fileName: req.file.filename,
+    };
+  }
+  
+  // Update other fields
+  listing.title = req.body.title;
+  listing.description = req.body.description;
+  listing.price = req.body.price;
+  listing.location = req.body.location;
+  listing.country = req.body.country;
+  
+  await listing.save();
   req.flash("success", "Listing Updated!");
   res.redirect(`/listings/${id}`);
 };

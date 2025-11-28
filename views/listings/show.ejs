@@ -3,13 +3,20 @@
 <div class="container my-5">
   <div class="row justify-content-center">
     <div class="col-lg-8 col-md-10">
-      <div class="card shadow rounded-4 overflow-hidden listing-card" style="border: none">
-
+      <div
+        class="card shadow rounded-4 overflow-hidden listing-card"
+        style="border: none"
+      >
         <!-- Header -->
         <div class="py-3 px-4 d-flex align-items-center bg-white border-bottom">
           <div
             class="me-3"
-            style="width: 6px; height: 32px; background: #dc3545; border-radius: 4px"
+            style="
+              width: 6px;
+              height: 32px;
+              background: #dc3545;
+              border-radius: 4px;
+            "
           ></div>
           <h3 class="fw-bold mb-0" style="letter-spacing: -0.3px">
             <%= listing.title %>
@@ -26,7 +33,6 @@
 
         <!-- Body -->
         <div class="card-body p-4">
-
           <p>Owned by: <i><%= listing.owner.username %></i></p>
 
           <p class="card-text mb-4 text-muted" style="font-size: 1.05rem">
@@ -54,7 +60,10 @@
               <i class="bi bi-pencil-square me-1"></i> Edit
             </a>
 
-            <form action="/listings/<%= listing._id %>?_method=DELETE" method="POST">
+            <form
+              action="/listings/<%= listing._id %>?_method=DELETE"
+              method="POST"
+            >
               <button
                 type="submit"
                 class="btn btn-outline-danger px-4 rounded-pill fw-semibold"
@@ -70,7 +79,6 @@
 
           <!-- Review Section -->
           <div class="col-10 mx-auto">
-
             <% if (currUser) { %>
             <form
               action="/listings/<%= listing._id %>/reviews"
@@ -82,7 +90,9 @@
 
               <!-- Rating -->
               <div class="mb-3">
-                <label class="form-label fw-semibold" for="rating">Rating</label>
+                <label class="form-label fw-semibold" for="rating"
+                  >Rating</label
+                >
 
                 <fieldset class="starability-slot">
                   <input
@@ -95,26 +105,53 @@
                     aria-label="No rating."
                   />
 
-                  <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+                  <input
+                    type="radio"
+                    id="first-rate1"
+                    name="review[rating]"
+                    value="1"
+                  />
                   <label for="first-rate1" title="Terrible">1 star</label>
 
-                  <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+                  <input
+                    type="radio"
+                    id="first-rate2"
+                    name="review[rating]"
+                    value="2"
+                  />
                   <label for="first-rate2" title="Not good">2 stars</label>
 
-                  <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+                  <input
+                    type="radio"
+                    id="first-rate3"
+                    name="review[rating]"
+                    value="3"
+                  />
                   <label for="first-rate3" title="Average">3 stars</label>
 
-                  <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+                  <input
+                    type="radio"
+                    id="first-rate4"
+                    name="review[rating]"
+                    value="4"
+                  />
                   <label for="first-rate4" title="Very good">4 stars</label>
 
-                  <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+                  <input
+                    type="radio"
+                    id="first-rate5"
+                    name="review[rating]"
+                    value="5"
+                  />
                   <label for="first-rate5" title="Amazing">5 stars</label>
                 </fieldset>
               </div>
 
               <!-- Comment -->
               <div class="mb-3">
-                <label class="form-label fw-semibold" for="comment">Comments</label>
+                <label class="form-label fw-semibold" for="comment"
+                  >Comments</label
+                >
                 <textarea
                   class="form-control shadow-sm"
                   name="review[comment]"
@@ -138,16 +175,18 @@
             <% } %>
 
             <!-- All Reviews -->
+            <% if(listing.reviews.length>0){ %>
             <div class="row">
               <p><b>All Reviews</b></p>
-
               <% for(review of listing.reviews) { %>
               <div class="card col-5 ms-3 mb-3">
                 <div class="card-body">
                   <div class="card-title">@<%= review.author.username %></div>
                   <div class="card-text"><%= review.comment %></div>
-
-                  <p class="starability-result card-text" data-rating="<%= review.rating %>"></p>
+                  <p
+                    class="starability-result card-text"
+                    data-rating="<%= review.rating %>"
+                  ></p>
                 </div>
 
                 <% if (currUser && currUser._id.equals(review.author._id)) { %>
@@ -161,10 +200,9 @@
                 <% } %>
               </div>
               <% } %>
-
             </div>
+            <% } %>
           </div>
-
         </div>
       </div>
     </div>
