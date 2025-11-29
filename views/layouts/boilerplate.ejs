@@ -8,6 +8,24 @@
     />
     <title>Nivaas</title>
 
+    <!-- Theme Flash Prevention Script -->
+    <!-- 
+      This script runs immediately (before page renders) to prevent theme flash.
+      It reads the saved theme from localStorage and applies it to the HTML element
+      before the CSS loads, preventing the flash from light to dark mode.
+    -->
+    <script>
+      (function preventThemeFlash() {
+        // Get the saved theme preference from localStorage
+        const savedTheme = localStorage.getItem("theme");
+        
+        // If dark theme was saved, apply it immediately to prevent flash
+        if (savedTheme === "dark") {
+          document.documentElement.setAttribute("data-theme", "dark");
+        }
+      })();
+    </script>
+
     <!-- Fonts -->
     <link
       href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"

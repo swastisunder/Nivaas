@@ -52,8 +52,14 @@
       <!-- Image -->
       <div class="form-field">
         <label for="image">Upload image *</label>
-        <input id="image" type="file" name="listing[image]" required />
+      
+        <div class="file-upload-wrapper">
+          <label for="image" class="custom-file-btn">Choose Image</label>
+          <span class="file-name">No file chosen</span>
+          <input id="image" type="file" name="listing[image]" required />
+        </div>
       </div>
+      
 
       <!-- Price, Location, Country -->
       <div class="form-row">

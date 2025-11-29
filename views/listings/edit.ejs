@@ -1,117 +1,85 @@
 <% layout("layouts/boilerplate.ejs") -%>
 
-<section class="page page-form">
-  <div class="form-card">
-    <h1>Edit listing</h1>
+  <section class="page page-form">
+    <div class="form-card">
+      <h1>Edit listing</h1>
 
-    <form
-      action="/listings/<%= listing._id %>?_method=PUT"
-      method="POST"
-      novalidate
-      class="form-vertical"
-      enctype="multipart/form-data"
-    >
-      <!-- Title -->
-      <div class="form-field">
-        <label for="title">Title *</label>
-        <input
-          id="title"
-          type="text"
-          name="title"
-          placeholder="Add a catchy title"
-          required
-          value="<%= listing.title %>"
-        />
-      </div>
-
-      <!-- Description -->
-      <div class="form-field">
-        <label for="description">Description *</label>
-        <textarea
-          id="description"
-          name="description"
-          required
-        ><%= listing.description %></textarea>
-      </div>
-
-      <!-- Categories -->
-      <!-- Allow user to update the categories for their listing -->
-      <div class="form-field">
-        <label>Select categories</label>
-        <div class="category-container">
-          <!-- Loop through each available category and create a checkbox for it -->
-          <!-- Pre-check the checkboxes for categories that are already assigned to this listing -->
-          <% categories.forEach(function(categoryName) { %>
-          <label class="category-option">
-            <input
-              type="checkbox"
-              name="categories"
-              value="<%= categoryName %>"
-              <%= listing.categories.includes(categoryName) ? "checked" : "" %>
-            />
-            <span><%= categoryName %></span>
-          </label>
-          <% }) %>
-        </div>
-      </div>
-
-      <!-- Image -->
-      <div class="form-field">
-        <label for="image">Update image</label>
-        <input id="image" type="file" name="listing[image]" accept="image/*" />
-        <% if (listing.image && listing.image.url) { %>
-        <div class="current-image">
-          <p class="current-image-label">Current image:</p>
-          <img
-            src="<%= listing.image.url %>"
-            alt="Current listing image"
-            class="current-image-preview"
-          />
-        </div>
-        <% } %>
-      </div>
-
-      <!-- Price, Location, Country -->
-      <div class="form-row">
+      <form action="/listings/<%= listing._id %>?_method=PUT" method="POST" novalidate class="form-vertical"
+        enctype="multipart/form-data">
+        <!-- Title -->
         <div class="form-field">
-          <label for="price">Price *</label>
-          <input
-            id="price"
-            type="number"
-            name="price"
-            min="500"
-            required
-            value="<%= listing.price %>"
-          />
+          <label for="title">Title *</label>
+          <input id="title" type="text" name="title" placeholder="Add a catchy title" required
+            value="<%= listing.title %>" />
         </div>
 
+        <!-- Description -->
         <div class="form-field">
-          <label for="location">Location *</label>
-          <input
-            id="location"
-            type="text"
-            name="location"
-            required
-            value="<%= listing.location %>"
-          />
+          <label for="description">Description *</label>
+          <textarea id="description" name="description" required><%= listing.description %></textarea>
         </div>
 
+        <!-- Categories -->
+        <!-- Allow user to update the categories for their listing -->
         <div class="form-field">
-          <label for="country">Country *</label>
-          <input
-            id="country"
-            type="text"
-            name="country"
-            required
-            value="<%= listing.country %>"
-          />
+          <label>Select categories</label>
+          <div class="category-container">
+            <!-- Loop through each available category and create a checkbox for it -->
+            <!-- Pre-check the checkboxes for categories that are already assigned to this listing -->
+            <% categories.forEach(function(categoryName) { %>
+              <label class="category-option">
+                <input type="checkbox" name="categories" value="<%= categoryName %>"
+                  <%=listing.categories.includes(categoryName) ? "checked" : "" %>
+                />
+                <span>
+                  <%= categoryName %>
+                </span>
+              </label>
+              <% }) %>
+          </div>
         </div>
-      </div>
 
-      <!-- Submit -->
-      <div class="form-actions">
-        <button type="submit" class="btn-primary">Update listing</button>
-      </div>
-    </form>
-  </div>
-</section>
+        <!-- Image -->
+        <div class="form-field">
+          <label for="image">Update image</label>
+
+          <div class="file-upload-wrapper">
+            <label for="image" class="custom-file-btn">Choose New Image</label>
+            <span class="file-name">No file chosen</span>
+            <input id="image" type="file" name="listing[image]" accept="image/*" />
+          </div>
+
+          <% if (listing.image && listing.image.url) { %>
+            <div class="current-image">
+              <p class="current-image-label">Current image:</p>
+              <img src="<%= listing.image.url %>" alt="Current listing image" class="current-image-preview" />
+            </div>
+            <% } %>
+        </div>
+
+
+        <!-- Price, Location, Country -->
+        <div class="form-row">
+          <div class="form-field">
+            <label for="price">Price *</label>
+            <input id="price" type="number" name="price" min="500" required value="<%= listing.price %>" />
+          </div>
+
+          <div class="form-field">
+            <label for="location">Location *</label>
+            <input id="location" type="text" name="location" required value="<%= listing.location %>" />
+          </div>
+
+          <div class="form-field">
+            <label for="country">Country *</label>
+            <input id="country" type="text" name="country" required value="<%= listing.country %>" />
+          </div>
+        </div>
+
+        <!-- Submit -->
+        <div class="form-actions">
+          <button type="submit" class="btn-primary">Update listing</button>
+        </div>
+      </form>
+    </div>
+  </section>

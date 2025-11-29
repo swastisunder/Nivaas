@@ -4,6 +4,8 @@
 
 /* LIGHT THEME (DEFAULT) */
 :root {
+  user-select: none;
+
   --primary: #fe424d;
   --primary-dark: #e63b45;
 
@@ -39,30 +41,38 @@
 
 /* DARK THEME */
 [data-theme="dark"] {
-  --primary: #fe424d;
-  --primary-dark: #ff6470;
+  --primary: #ff6b81;
+  /* Rose pink */
+  --primary-dark: #ff4d66;
+  /* Deeper rose */
 
-  --bg-body: #020617;
-  --bg-card: #020617;
-  --bg-elevated: #020617;
+  --bg-body: #0d0c0c;
+  /* Deep luxury charcoal */
+  --bg-card: #141313;
+  /* Soft elevated surface */
+  --bg-elevated: #1b1a1a;
+  /* Slight highlight */
 
-  --nav-bg: #020617;
-  --footer-bg: #020617;
-  --search-bg: #020617;
-  --input-bg: #020617;
-  --pill-bg: #020617;
-  --review-bg: #020617;
+  --nav-bg: #0d0c0c;
+  --footer-bg: #0d0c0c;
+  --search-bg: #141313;
+  --input-bg: #141313;
+  --pill-bg: #1b1a1a;
+  --review-bg: #1b1a1a;
 
-  --tag-bg: rgba(254, 66, 77, 0.18);
-  --tag-color: #fecaca;
+  --tag-bg: rgba(255, 107, 129, 0.18);
+  --tag-color: #ffd6dc;
 
-  --text-main: #e5e7eb;
-  --text-muted: #9ca3af;
+  --text-main: #f2f2f2;
+  /* Soft premium white */
+  --text-muted: #b3b3b3;
+  /* Subtle grey */
 
-  --border-subtle: #1f2937;
+  --border-subtle: #2a2929;
+  /* Luxury thin border */
 
-  --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.6);
-  --shadow-light: 0 6px 18px rgba(0, 0, 0, 0.5);
+  --shadow-soft: 0 12px 30px rgba(0, 0, 0, 0.55);
+  --shadow-light: 0 6px 18px rgba(0, 0, 0, 0.35);
 }
 
 /* Smooth theme transitions on main surfaces */
@@ -424,6 +434,88 @@ img {
   box-shadow: var(--shadow-soft);
 }
 
+/* Hide the ugly default file input */
+#image {
+  display: none;
+}
+
+/* Wrapper */
+.file-upload-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Custom Button */
+.custom-file-btn {
+  background: var(--primary);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s ease;
+}
+
+.custom-file-btn:hover {
+  background: var(--primary-dark);
+}
+
+/* Selected file name text */
+.file-name {
+  color: #a1a1a1;
+  font-size: 0.9rem;
+}
+
+/* Hide default input */
+#image {
+  display: none;
+}
+
+/* Wrapper */
+.file-upload-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+/* Custom button */
+.custom-file-btn {
+  background: var(--primary);
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.25s ease;
+}
+
+.custom-file-btn:hover {
+  background: var(--primary-dark);
+}
+
+/* File name display */
+.file-name {
+  color: #c7c7c7;
+  font-size: 0.9rem;
+}
+
+/* Current image preview */
+.current-image-label {
+  font-size: 0.9rem;
+  margin-bottom: 6px;
+  color: #bdbdbd;
+}
+
+.current-image-preview {
+  width: 150px;
+  border-radius: 10px;
+  border: 1px solid #333;
+  object-fit: cover;
+}
+
+
 .listing-image-wrapper {
   position: relative;
   overflow: hidden;
@@ -588,7 +680,7 @@ img {
   color: var(--text-main);
 }
 
-.category-option input:checked + span {
+.category-option input:checked+span {
   background: var(--primary);
   color: #ffffff;
   border-color: var(--primary);
@@ -1045,7 +1137,6 @@ img {
   }
 }
 
-
 /* ------------------------------
    THEME TOGGLE BUTTON (FINAL)
 ------------------------------ */
@@ -1062,10 +1153,7 @@ img {
   justify-content: center;
 
   font-size: 1rem;
-  transition: 
-    background 0.25s ease,
-    color 0.25s ease,
-    border-color 0.25s ease,
+  transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease,
     box-shadow 0.25s ease;
 }
 

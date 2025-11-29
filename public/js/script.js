@@ -106,15 +106,9 @@ setTimeout(function hideFlashMessage() {
  */
 document.addEventListener("DOMContentLoaded", function initializeThemeToggle() {
   // Get the root HTML element so we can set the theme attribute
+  // Note: Theme is already applied in the head script to prevent flash
+  // This code just sets up the toggle button functionality
   const htmlRootElement = document.documentElement;
-
-  // Load the previously saved theme from browser storage
-  const savedThemePreference = localStorage.getItem("theme");
-
-  // If the user previously selected dark theme, apply it immediately
-  if (savedThemePreference === "dark") {
-    htmlRootElement.setAttribute("data-theme", "dark");
-  }
 
   // Find both theme toggle buttons (desktop and mobile versions)
   const themeToggleButtons = [
@@ -151,4 +145,14 @@ document.addEventListener("DOMContentLoaded", function initializeThemeToggle() {
       buttonElement.addEventListener("click", toggleTheme);
     }
   });
+});
+
+
+const input = document.getElementById("image");
+const fileName = document.querySelector(".file-name");
+
+input.addEventListener("change", () => {
+  fileName.textContent = input.files.length
+    ? input.files[0].name
+    : "No file chosen";
 });
