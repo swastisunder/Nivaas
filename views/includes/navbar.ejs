@@ -1,29 +1,80 @@
-<nav class="navbar navbar-expand-sm bg-body-light border-bottom sticky-top">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="/listings"
-      ><i class="fa-regular fa-compass"></i
-    ></a>
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarNavAltMarkup"
-    >
-      <span class="navbar-toggler-icon"></span>
+<header class="nav-wrapper">
+  <nav class="nav">
+    <div class="nav-left">
+      <a href="/listings" class="nav-logo">
+        <i class="fa-regular fa-compass"></i>
+      </a>
+    </div>
+
+    <div class="nav-center">
+      <form class="nav-search" action="/listings" method="GET">
+        <input
+          class="nav-search-input"
+          type="search"
+          name="search"
+          placeholder="Search destinations"
+          aria-label="Search"
+        />
+        <button class="nav-search-btn" type="submit">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <span>Search</span>
+        </button>
+      </form>
+    </div>
+
+    <div class="nav-right">
+      <button
+        class="theme-toggle-btn"
+        id="themeToggle"
+        aria-label="Toggle theme"
+      >
+        <i class="fa-solid fa-moon"></i>
+      </button>
+
+      <% if (!currUser) { %>
+      <a class="nav-link-simple" href="/signup">Sign Up</a>
+      <a class="nav-link-simple" href="/login">Log In</a>
+      <% } else { %>
+      <a class="nav-pill-btn" href="/listings/new">Host now</a>
+      <a class="nav-link-simple" href="/logout">Log Out</a>
+      <% } %>
+    </div>
+
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav">
-        <a class="nav-link" href="/listings">Explore</a>
-      </div>
-      <div class="navbar-nav ms-auto">
-        <% if (!currUser) { %>
-        <a class="nav-link" href="/signup"><b>SignUp</b></a>
-        <a class="nav-link" href="/login"><b>Log In</b></a>
-        <% } if (currUser) { %>
-        <a class="nav-link" href="/listings/new">Host Now</a>
-        <a class="nav-link" href="/logout"><b>Log Out</b></a>
-        <% } %>
-      </div>
+  </nav>
+
+  <!-- Mobile dropdown -->
+  <div class="nav-mobile-menu" id="navMobileMenu">
+    <div class="nav-mobile-section">
+      <form class="nav-search mobile" action="/listings" method="GET">
+        <input
+          class="nav-search-input"
+          type="search"
+          name="search"
+          placeholder="Search destinations"
+          aria-label="Search"
+        />
+        <button class="nav-search-btn" type="submit">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <span>Search</span>
+        </button>
+      </form>
+    </div>
+
+    <div class="nav-mobile-section nav-mobile-links">
+      <button class="theme-toggle-btn mobile" id="themeToggleMobile">
+        <i class="fa-solid fa-moon"></i>
+      </button>
+
+      <% if (!currUser) { %>
+      <a class="nav-link-simple" href="/signup">Sign Up</a>
+      <a class="nav-link-simple" href="/login">Log In</a>
+      <% } else { %>
+      <a class="nav-pill-btn" href="/listings/new">Host now</a>
+      <a class="nav-link-simple" href="/logout">Log Out</a>
+      <% } %>
     </div>
   </div>
-</nav>
+</header>

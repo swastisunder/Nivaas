@@ -1,252 +1,234 @@
-<% layout("layouts/boilerplate.ejs") -%> <% // Emoji icons for categories const
-catIcons = { "mountains": "🏔", "trending": "🔥", "tropical": "🌴", "beachfront":
-"🏖", "islands": "🏝", "desert": "🏜", "arctic": "❄️", "farms": "🌾", "camping":
-"⛺️", "amazing pools": "🏊", "lakefront": "🏞", "luxury": "💎", "castles": "🏰",
-"entire homes": "🏠", "iconic cities": "🌆" }; %>
+<% layout("layouts/boilerplate.ejs") -%>
 
-<div class="container my-5">
-  <div class="row justify-content-center">
-    <div class="col-lg-8 col-md-10">
-      <div
-        class="card shadow rounded-4 overflow-hidden listing-card"
-        style="border: none"
-      >
-        <!-- Header -->
-        <div class="py-3 px-4 d-flex align-items-center bg-white border-bottom">
-          <div
-            class="me-3"
-            style="
-              width: 6px;
-              height: 32px;
-              background: #dc3545;
-              border-radius: 4px;
-            "
-          ></div>
+<%
+  const catIcons = {
+    "mountains": "🏔",
+    "trending": "🔥",
+    "tropical": "🌴",
+    "beachfront": "🏖",
+    "islands": "🏝",
+    "desert": "🏜",
+    "arctic": "❄️",
+    "farms": "🌾",
+    "camping": "⛺️",
+    "amazing pools": "🏊",
+    "lakefront": "🏞",
+    "luxury": "💎",
+    "castles": "🏰",
+    "entire homes": "🏠",
+    "iconic cities": "🌆"
+  };
+%>
 
-          <div class="w-100">
-            <h3 class="fw-bold mb-0" style="letter-spacing: -0.3px">
-              <%= listing.title %>
-            </h3>
-          </div>
+<section class="page page-show">
+  <article class="show-card">
+    <!-- Header -->
+    <header class="show-header">
+      <div class="show-header-bar"></div>
+      <div class="show-header-text">
+        <h1><%= listing.title %></h1>
+        <p class="show-owner">Owned by <span><%= listing.owner.username %></span></p>
+      </div>
+    </header>
+
+    <!-- Image -->
+    <div class="show-image-wrapper">
+      <img
+        src="<%= listing.image.url %>"
+        alt="<%= listing.title %>"
+        class="show-image"
+      />
+    </div>
+
+    <!-- Content -->
+    <div class="show-body">
+      <!-- Categories -->
+      <% if (listing.categories && listing.categories.length > 0) { %>
+      <div class="show-tags">
+        <% listing.categories.forEach(function(cat) { %>
+        <a
+          href="/listings?category=<%= encodeURIComponent(cat) %>"
+          class="tag-pill"
+        >
+          <%= catIcons[cat] || "🏷" %> <%= cat %>
+        </a>
+        <% }) %>
+      </div>
+      <% } %>
+
+      <!-- Description -->
+      <p class="show-description"><%= listing.description %></p>
+
+      <!-- Price + Location -->
+      <div class="show-price-location">
+        <div class="show-price">
+          <span class="price-number">
+            ₹<%= listing.price.toLocaleString('en-IN') %>
+          </span>
+          <span class="price-per">/ night</span>
         </div>
-
-        <!-- Main Image -->
-        <img
-          src="<%= listing.image.url %>"
-          class="card-img-top show-img"
-          style="object-fit: cover; max-height: 420px; border-radius: 0"
-          alt="<%= listing.title %>"
-        />
-
-        <!-- Body -->
-        <div class="card-body p-4">
-          <p>Owned by: <i><%= listing.owner.username %></i></p>
-
-          <!-- Category badges -->
-          <% if (listing.categories && listing.categories.length > 0) { %>
-          <div class="mt-2 mb-2 d-flex flex-wrap gap-2">
-            <% listing.categories.forEach(function(cat) { %>
-            <a
-              href="/listings?category=<%= encodeURIComponent(cat) %>"
-              class="badge rounded-pill px-3 py-2"
-              style="
-                background: #f8d7da;
-                color: #b02a37;
-                font-size: 0.9rem;
-                text-decoration: none;
-              "
-            >
-              <%= catIcons[cat] || "🏷" %> <%= cat %>
-            </a>
-            <% }) %>
-          </div>
-          <% } %>
-
-          <p class="card-text mb-4 text-muted" style="font-size: 1.05rem">
-            <%= listing.description %>
-          </p>
-
-          <div class="mb-3">
-            <h4 class="mb-1 text-danger fw-bold" style="font-size: 1.7rem">
-              ₹<%= listing.price.toLocaleString('en-IN') %>
-            </h4>
-            <p class="text-secondary mb-0">
-              <i class="bi bi-geo-alt-fill text-danger"></i>
-              <%= listing.location %>, <%= listing.country %>
-            </p>
-          </div>
-
-          <!-- Edit/Delete Buttons -->
-          <% if (currUser && currUser._id.equals(listing.owner._id)) { %>
-          <div class="d-flex gap-3 mt-4">
-            <a
-              href="/listings/<%= listing._id %>/edit"
-              class="btn update-btn text-white px-4 rounded-pill fw-semibold"
-              style="background: #dc3545; border: none"
-            >
-              <i class="bi bi-pencil-square me-1"></i> Edit
-            </a>
-
-            <form
-              action="/listings/<%= listing._id %>?_method=DELETE"
-              method="POST"
-            >
-              <button
-                type="submit"
-                class="btn btn-outline-danger px-4 rounded-pill fw-semibold"
-                style="border-width: 2px"
-              >
-                <i class="bi bi-trash me-1"></i> Delete
-              </button>
-            </form>
-          </div>
-          <% } %>
-
-          <hr class="my-5" />
-
-          <!-- Review Section -->
-          <div class="col-10 mx-auto">
-            <% if (currUser) { %>
-            <form
-              action="/listings/<%= listing._id %>/reviews"
-              method="POST"
-              novalidate
-              class="needs-validation"
-            >
-              <h2 class="fw-semibold mb-4 text-center">Leave a Review</h2>
-
-              <!-- Rating -->
-              <div class="mb-3">
-                <label class="form-label fw-semibold" for="rating">
-                  Rating
-                </label>
-
-                <fieldset class="starability-slot">
-                  <input
-                    type="radio"
-                    id="no-rate"
-                    name="review[rating]"
-                    value="1"
-                    checked
-                  />
-
-                  <input
-                    type="radio"
-                    id="first-rate1"
-                    name="review[rating]"
-                    value="1"
-                  />
-                  <label for="first-rate1">1 star</label>
-
-                  <input
-                    type="radio"
-                    id="first-rate2"
-                    name="review[rating]"
-                    value="2"
-                  />
-                  <label for="first-rate2">2 stars</label>
-
-                  <input
-                    type="radio"
-                    id="first-rate3"
-                    name="review[rating]"
-                    value="3"
-                  />
-                  <label for="first-rate3">3 stars</label>
-
-                  <input
-                    type="radio"
-                    id="first-rate4"
-                    name="review[rating]"
-                    value="4"
-                  />
-                  <label for="first-rate4">4 stars</label>
-
-                  <input
-                    type="radio"
-                    id="first-rate5"
-                    name="review[rating]"
-                    value="5"
-                  />
-                  <label for="first-rate5">5 stars</label>
-                </fieldset>
-              </div>
-
-              <!-- Comment -->
-              <div class="mb-3">
-                <label class="form-label fw-semibold" for="comment">
-                  Comments
-                </label>
-                <textarea
-                  class="form-control shadow-sm"
-                  name="review[comment]"
-                  id="comment"
-                  rows="4"
-                  required
-                ></textarea>
-              </div>
-
-              <div class="text-center">
-                <button class="btn btn-dark px-5 py-2 rounded-pill fw-semibold">
-                  Submit
-                </button>
-              </div>
-            </form>
-
-            <hr />
-            <% } %>
-
-            <!-- All Reviews -->
-            <% if (listing.reviews.length > 0) { %>
-            <div class="row">
-              <p><b>All Reviews</b></p>
-
-              <% for (review of listing.reviews) { %>
-              <div class="card col-5 ms-3 mb-3">
-                <div class="card-body">
-                  <div class="card-title">@<%= review.author.username %></div>
-                  <div class="card-text"><%= review.comment %></div>
-
-                  <p
-                    class="starability-result card-text"
-                    data-rating="<%= review.rating %>"
-                  ></p>
-                </div>
-
-                <% if (currUser && currUser._id.equals(review.author._id)) { %>
-                <form
-                  class="mb-3"
-                  method="POST"
-                  action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE"
-                >
-                  <button class="btn btn-sm btn-danger">Delete</button>
-                </form>
-                <% } %>
-              </div>
-              <% } %>
-            </div>
-            <% } %>
-          </div>
-
-          <div class="mt-5">
-            <h4 class="fw-semibold mb-3">Location on Map</h4>
-            <div id="map" style="height: 350px; border-radius: 12px"></div>
-          </div>
-
-          <div class="text-center mt-3">
-            <a
-              href="https://www.google.com/maps/search/?api=1&query=<%= encodeURIComponent(listing.title + ', ' + listing.location + ', ' + listing.country) %>"
-              target="_blank"
-              class="btn btn-danger px-4 py-2 rounded-pill fw-semibold"
-            >
-              Open in Maps
-            </a>
-          </div>
+        <div class="show-location">
+          <i class="bi bi-geo-alt-fill"></i>
+          <span><%= listing.location %>, <%= listing.country %></span>
         </div>
       </div>
+
+      <!-- Owner controls -->
+      <% if (currUser && currUser._id.equals(listing.owner._id)) { %>
+      <div class="show-owner-actions">
+        <a
+          href="/listings/<%= listing._id %>/edit"
+          class="btn-primary btn-inline"
+        >
+          <i class="bi bi-pencil-square"></i>
+          <span>Edit</span>
+        </a>
+
+        <form
+          action="/listings/<%= listing._id %>?_method=DELETE"
+          method="POST"
+        >
+          <button type="submit" class="btn-outline">
+            <i class="bi bi-trash"></i>
+            <span>Delete</span>
+          </button>
+        </form>
+      </div>
+      <% } %>
+
+      <hr class="show-divider" />
+
+      <!-- Review form -->
+      <section class="show-reviews">
+        <% if (currUser) { %>
+        <form
+          action="/listings/<%= listing._id %>/reviews"
+          method="POST"
+          novalidate
+          class="form-vertical review-form"
+        >
+          <h2>Leave a review</h2>
+
+          <div class="form-field">
+            <label class="form-label" for="rating">Rating</label>
+            <fieldset class="starability-slot">
+              <input
+                type="radio"
+                id="no-rate"
+                name="review[rating]"
+                value="1"
+                checked
+              />
+
+              <input
+                type="radio"
+                id="first-rate1"
+                name="review[rating]"
+                value="1"
+              />
+              <label for="first-rate1">1 star</label>
+
+              <input
+                type="radio"
+                id="first-rate2"
+                name="review[rating]"
+                value="2"
+              />
+              <label for="first-rate2">2 stars</label>
+
+              <input
+                type="radio"
+                id="first-rate3"
+                name="review[rating]"
+                value="3"
+              />
+              <label for="first-rate3">3 stars</label>
+
+              <input
+                type="radio"
+                id="first-rate4"
+                name="review[rating]"
+                value="4"
+              />
+              <label for="first-rate4">4 stars</label>
+
+              <input
+                type="radio"
+                id="first-rate5"
+                name="review[rating]"
+                value="5"
+              />
+              <label for="first-rate5">5 stars</label>
+            </fieldset>
+          </div>
+
+          <div class="form-field">
+            <label class="form-label" for="comment">Comments</label>
+            <textarea
+              id="comment"
+              name="review[comment]"
+              rows="4"
+              required
+            ></textarea>
+          </div>
+
+          <div class="form-actions center">
+            <button class="btn-primary" type="submit">Submit</button>
+          </div>
+        </form>
+
+        <hr class="show-divider" />
+        <% } %>
+
+        <!-- All reviews -->
+        <% if (listing.reviews.length > 0) { %>
+        <div class="reviews-list">
+          <p class="reviews-title">All reviews</p>
+
+          <% for (review of listing.reviews) { %>
+          <article class="review-card">
+            <div class="review-header">
+              <span class="review-author">@<%= review.author.username %></span>
+            </div>
+            <p class="review-text"><%= review.comment %></p>
+            <p
+              class="starability-result"
+              data-rating="<%= review.rating %>"
+            ></p>
+
+            <% if (currUser && currUser._id.equals(review.author._id)) { %>
+            <form
+              method="POST"
+              action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE"
+              class="review-delete-form"
+            >
+              <button class="btn-link-danger" type="submit">Delete</button>
+            </form>
+            <% } %>
+          </article>
+          <% } %>
+        </div>
+        <% } %>
+      </section>
+
+      <!-- Map -->
+      <section class="show-map-section">
+        <h3>Location on map</h3>
+        <div id="map"></div>
+
+        <div class="map-actions">
+          <a
+            href="https://www.google.com/maps/search/?api=1&query=<%= encodeURIComponent(listing.title + ', ' + listing.location + ', ' + listing.country) %>"
+            target="_blank"
+            class="btn-primary btn-inline"
+          >
+            Open in Maps
+          </a>
+        </div>
+      </section>
     </div>
-  </div>
-</div>
+  </article>
+</section>
 
 <script>
   const address = "<%= listing.location %>, <%= listing.country %>";
@@ -262,16 +244,12 @@ catIcons = { "mountains": "🏔", "trending": "🔥", "tropical": "🌴", "beach
         const lat = data[0].lat;
         const lon = data[0].lon;
 
-        // Create map
         const map = L.map("map").setView([lat, lon], 15);
 
-        // WORKING TILE LAYER
-        L.tileLayer(
-          "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-          { attribution: "&copy; OpenStreetMap contributors" }
-        ).addTo(map);
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+          attribution: "&copy; OpenStreetMap contributors",
+        }).addTo(map);
 
-        // Marker
         L.marker([lat, lon])
           .addTo(map)
           .bindPopup("<b><%= listing.title %></b>")
@@ -281,4 +259,3 @@ catIcons = { "mountains": "🏔", "trending": "🔥", "tropical": "🌴", "beach
       }
     });
 </script>
-

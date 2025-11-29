@@ -26,20 +26,32 @@ const categoriesList = Object.keys(categoriesIcons);
 
 // Show all listings, or filter by ?category=name
 module.exports.index = async (req, res) => {
-  const category = req.query.category; // e.g. "trending"
+  const category = req.query.category; // e.g. "mountains"
+  const search = req.query.search; // e.g. "goa"
 
-  let listings;
+  // Start with empty find query
+  let query = {};
+
+  // If a category is selected
   if (category) {
-    listings = await Listing.find({ categories: category });
-  } else {
-    listings = await Listing.find({});
+    query.categories = category;
   }
 
+  // If a search term is entered
+  if (search) {
+    const regex = new RegExp(search, "i"); // case-insensitive
+
+    query.$or = [{ title: regex }, { location: regex }, { country: regex }];
+  }
+
+  const listings = await Listing.find(query);
+
   res.render("listings/index.ejs", {
-    listings: listings,
+    listings,
     categories: categoriesIcons,
     selectedCategory: category || null,
     noResults: listings.length === 0,
+    searchTerm: search || "",
   });
 };
 

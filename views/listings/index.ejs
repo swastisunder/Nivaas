@@ -1,52 +1,59 @@
 <% layout("layouts/boilerplate.ejs") -%>
 
-<div class="mt-3">
+<section class="page page-index">
   <!-- CATEGORY FILTER BAR -->
-  <div id="filters" class="d-flex flex-wrap gap-3">
-    <!-- ALL FILTER -->
+  <div class="filters-bar" id="filters">
     <a
       href="/listings"
-      class="filter <%= !selectedCategory ? 'active-filter' : '' %>"
+      class="filter-pill <%= !selectedCategory ? 'is-active' : '' %>"
     >
-      <div><i class="fa-solid fa-border-all"></i></div>
+      <div class="filter-icon">
+        <i class="fa-solid fa-border-all"></i>
+      </div>
       <p>All</p>
     </a>
 
-    <!-- DYNAMIC CATEGORY FILTERS -->
     <% Object.keys(categories).forEach(function(cat) { %>
     <a
       href="/listings?category=<%= encodeURIComponent(cat) %>"
-      class="filter <%= selectedCategory === cat ? 'active-filter' : '' %>"
+      class="filter-pill <%= selectedCategory === cat ? 'is-active' : '' %>"
     >
-      <div><i class="fa-solid <%= categories[cat] %>"></i></div>
+      <div class="filter-icon">
+        <i class="fa-solid <%= categories[cat] %>"></i>
+      </div>
       <p><%= cat.charAt(0).toUpperCase() + cat.slice(1) %></p>
     </a>
     <% }) %>
   </div>
 
   <!-- LISTINGS GRID -->
-  <div class="row row-cols-lg-3 row-cols-md-3 mt-3 row-cols-sm-2">
+  <div class="listings-grid">
     <% if (noResults) { %>
-    <div class="col-12 text-center mt-5">
-      <h4 class="text-muted">No listings found in this category</h4>
+    <div class="empty-state">
+      <h2>No listings found</h2>
+      <p>Try changing filters or search query.</p>
     </div>
-    <% } else { %> <% for (const listing of listings) { %>
+    <% } else { %>
+    <% for (const listing of listings) { %>
     <a href="/listings/<%= listing._id %>" class="listing-link">
-      <div class="card col listing-card">
-        <img
-          src="<%= listing.image.url %>"
-          class="card-img-top home-images"
-          alt="listing img"
-        />
-        <div class="card-img-overlay"></div>
-        <div class="card-body">
-          <h5 class="card-title"><%= listing.title %></h5>
-          <p class="card-text">
-            ₹<%= listing.price.toLocaleString('en-IN') %> / night
+      <article class="listing-card">
+        <div class="listing-image-wrapper">
+          <img
+            src="<%= listing.image.url %>"
+            class="listing-image"
+            alt="Listing image"
+          />
+        </div>
+        <div class="listing-content">
+          <h3 class="listing-title"><%= listing.title %></h3>
+          <p class="listing-price">
+            ₹<%= listing.price.toLocaleString('en-IN') %>
+            <span>/ night</span>
           </p>
         </div>
-      </div>
+      </article>
     </a>
-    <% } %> <% } %>
+    <% } %>
+    <% } %>
   </div>
-</div>
+</section>

@@ -1,46 +1,42 @@
 <% layout("layouts/boilerplate.ejs") -%>
 
-<div class="row">
-  <div class="col-8 offset-2">
-    <h1>Create a New Listing</h1>
-    <br />
+<section class="page page-form">
+  <div class="form-card">
+    <h1>Create a new listing</h1>
 
     <form
       action="/listings"
       method="POST"
       novalidate
-      class="needs-validation"
+      class="form-vertical"
       enctype="multipart/form-data"
     >
       <!-- Title -->
-      <div class="mb-3">
-        <label for="title" class="form-label">Title *</label>
+      <div class="form-field">
+        <label for="title">Title *</label>
         <input
           id="title"
           type="text"
           name="title"
           placeholder="Add a catchy title"
           required
-          class="form-control"
         />
       </div>
 
       <!-- Description -->
-      <div class="mb-3">
-        <label for="description" class="form-label">Description *</label>
+      <div class="form-field">
+        <label for="description">Description *</label>
         <textarea
           id="description"
           name="description"
-          placeholder="Description"
+          placeholder="Describe your place"
           required
-          class="form-control"
         ></textarea>
       </div>
 
       <!-- Categories -->
-      <div class="mb-3">
-        <label class="form-label">Select Categories</label>
-
+      <div class="form-field">
+        <label>Select categories</label>
         <div class="category-container">
           <% categories.forEach(function(cat) { %>
           <label class="category-option">
@@ -52,21 +48,15 @@
       </div>
 
       <!-- Image -->
-      <div class="mb-3">
-        <label for="image" class="form-label">Upload Listing Image</label>
-        <input
-          id="image"
-          type="file"
-          name="listing[image]"
-          class="form-control"
-          required
-        />
+      <div class="form-field">
+        <label for="image">Upload image *</label>
+        <input id="image" type="file" name="listing[image]" required />
       </div>
 
       <!-- Price, Location, Country -->
-      <div class="row">
-        <div class="mb-3 col-4">
-          <label for="price" class="form-label">Price *</label>
+      <div class="form-row">
+        <div class="form-field">
+          <label for="price">Price *</label>
           <input
             id="price"
             type="number"
@@ -74,43 +64,36 @@
             min="500"
             placeholder="Minimum 500"
             required
-            class="form-control"
           />
         </div>
 
-        <div class="mb-3 col-4">
-          <label for="location" class="form-label">Location *</label>
+        <div class="form-field">
+          <label for="location">Location *</label>
           <input
             id="location"
             type="text"
             name="location"
             placeholder="Surat, Gujarat"
             required
-            class="form-control"
           />
         </div>
 
-        <div class="mb-3 col-4">
-          <label for="country" class="form-label">Country *</label>
+        <div class="form-field">
+          <label for="country">Country *</label>
           <input
             id="country"
             type="text"
             name="country"
             placeholder="India"
             required
-            class="form-control"
           />
         </div>
       </div>
 
       <!-- Submit -->
-      <div>
-        <br />
-        <button type="submit" class="btn btn-dark add-btn">
-          Create New Listing
-        </button>
-        <br /><br /><br />
+      <div class="form-actions">
+        <button type="submit" class="btn-primary">Create listing</button>
       </div>
     </form>
   </div>
-</div>
+</section>

@@ -1,20 +1,19 @@
 <% layout("layouts/boilerplate.ejs") -%>
 
-<div class="row">
-  <div class="col-8 offset-2">
-    <h1>Edit Listing</h1>
-    <br />
+<section class="page page-form">
+  <div class="form-card">
+    <h1>Edit listing</h1>
 
     <form
       action="/listings/<%= listing._id %>?_method=PUT"
       method="POST"
       novalidate
-      class="needs-validation"
+      class="form-vertical"
       enctype="multipart/form-data"
     >
       <!-- Title -->
-      <div class="mb-3">
-        <label for="title" class="form-label">Title *</label>
+      <div class="form-field">
+        <label for="title">Title *</label>
         <input
           id="title"
           type="text"
@@ -22,113 +21,94 @@
           placeholder="Add a catchy title"
           required
           value="<%= listing.title %>"
-          class="form-control"
         />
       </div>
 
       <!-- Description -->
-      <div class="mb-3">
-        <label for="description" class="form-label">Description *</label>
+      <div class="form-field">
+        <label for="description">Description *</label>
         <textarea
           id="description"
           name="description"
-          placeholder="Description"
           required
-          class="form-control"
-        >
-<%= listing.description %></textarea
-        >
+        ><%= listing.description %></textarea>
       </div>
 
       <!-- Categories -->
-      <div class="mb-3">
-        <label class="form-label">Select Categories</label>
-
+      <div class="form-field">
+        <label>Select categories</label>
         <div class="category-container">
           <% categories.forEach(function(cat) { %>
           <label class="category-option">
-            <input type="checkbox" name="categories" value="<%= cat %>" <%=
-            listing.categories.includes(cat) ? "checked" : "" %> />
+            <input
+              type="checkbox"
+              name="categories"
+              value="<%= cat %>"
+              <%= listing.categories.includes(cat) ? "checked" : "" %>
+            />
             <span><%= cat %></span>
           </label>
           <% }) %>
         </div>
       </div>
 
-      <!-- Image Upload -->
-      <div class="mb-3">
-        <label for="image" class="form-label">Upload Listing Image</label>
-        <input
-          id="image"
-          type="file"
-          name="listing[image]"
-          class="form-control"
-          accept="image/*"
-        />
+      <!-- Image -->
+      <div class="form-field">
+        <label for="image">Update image</label>
+        <input id="image" type="file" name="listing[image]" accept="image/*" />
         <% if (listing.image && listing.image.url) { %>
-        <div class="mt-2">
-          <small class="text-muted">Current image:</small>
+        <div class="current-image">
+          <p class="current-image-label">Current image:</p>
           <img
             src="<%= listing.image.url %>"
             alt="Current listing image"
-            class="img-thumbnail mt-2"
-            style="max-width: 200px; max-height: 200px; object-fit: cover"
+            class="current-image-preview"
           />
         </div>
         <% } %>
       </div>
 
       <!-- Price, Location, Country -->
-      <div class="row">
-        <div class="mb-3 col-4">
-          <label for="price" class="form-label">Price *</label>
+      <div class="form-row">
+        <div class="form-field">
+          <label for="price">Price *</label>
           <input
             id="price"
             type="number"
             name="price"
-            placeholder="Minimum 500"
-            required
             min="500"
+            required
             value="<%= listing.price %>"
-            class="form-control"
           />
         </div>
 
-        <div class="mb-3 col-4">
-          <label for="location" class="form-label">Location *</label>
+        <div class="form-field">
+          <label for="location">Location *</label>
           <input
             id="location"
             type="text"
             name="location"
-            placeholder="Surat, Gujarat"
             required
             value="<%= listing.location %>"
-            class="form-control"
           />
         </div>
 
-        <div class="mb-3 col-4">
-          <label for="country" class="form-label">Country *</label>
+        <div class="form-field">
+          <label for="country">Country *</label>
           <input
             id="country"
             type="text"
             name="country"
-            placeholder="India"
             required
             value="<%= listing.country %>"
-            class="form-control"
           />
         </div>
       </div>
 
       <!-- Submit -->
-      <div>
-        <br />
-        <button type="submit" class="btn btn-dark update-btn">
-          Update Listing
-        </button>
-        <br /><br /><br />
+      <div class="form-actions">
+        <button type="submit" class="btn-primary">Update listing</button>
       </div>
     </form>
   </div>
-</div>
+</section>
