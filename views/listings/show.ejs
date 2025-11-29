@@ -1,4 +1,8 @@
-<% layout("layouts/boilerplate.ejs") -%>
+<% layout("layouts/boilerplate.ejs") -%> <% // Emoji icons for categories const
+catIcons = { "mountains": "🏔", "trending": "🔥", "tropical": "🌴", "beachfront":
+"🏖", "islands": "🏝", "desert": "🏜", "arctic": "❄️", "farms": "🌾", "camping":
+"⛺️", "amazing pools": "🏊", "lakefront": "🏞", "luxury": "💎", "castles": "🏰",
+"entire homes": "🏠", "iconic cities": "🌆" }; %>
 
 <div class="container my-5">
   <div class="row justify-content-center">
@@ -18,9 +22,12 @@
               border-radius: 4px;
             "
           ></div>
-          <h3 class="fw-bold mb-0" style="letter-spacing: -0.3px">
-            <%= listing.title %>
-          </h3>
+
+          <div class="w-100">
+            <h3 class="fw-bold mb-0" style="letter-spacing: -0.3px">
+              <%= listing.title %>
+            </h3>
+          </div>
         </div>
 
         <!-- Main Image -->
@@ -34,6 +41,26 @@
         <!-- Body -->
         <div class="card-body p-4">
           <p>Owned by: <i><%= listing.owner.username %></i></p>
+
+          <!-- Category badges -->
+          <% if (listing.categories && listing.categories.length > 0) { %>
+          <div class="mt-2 mb-2 d-flex flex-wrap gap-2">
+            <% listing.categories.forEach(function(cat) { %>
+            <a
+              href="/listings?category=<%= encodeURIComponent(cat) %>"
+              class="badge rounded-pill px-3 py-2"
+              style="
+                background: #f8d7da;
+                color: #b02a37;
+                font-size: 0.9rem;
+                text-decoration: none;
+              "
+            >
+              <%= catIcons[cat] || "🏷" %> <%= cat %>
+            </a>
+            <% }) %>
+          </div>
+          <% } %>
 
           <p class="card-text mb-4 text-muted" style="font-size: 1.05rem">
             <%= listing.description %>
@@ -49,7 +76,7 @@
             </p>
           </div>
 
-          <!-- Buttons: Edit/Delete -->
+          <!-- Edit/Delete Buttons -->
           <% if (currUser && currUser._id.equals(listing.owner._id)) { %>
           <div class="d-flex gap-3 mt-4">
             <a
@@ -90,19 +117,17 @@
 
               <!-- Rating -->
               <div class="mb-3">
-                <label class="form-label fw-semibold" for="rating"
-                  >Rating</label
-                >
+                <label class="form-label fw-semibold" for="rating">
+                  Rating
+                </label>
 
                 <fieldset class="starability-slot">
                   <input
                     type="radio"
                     id="no-rate"
-                    class="input-no-rate"
                     name="review[rating]"
                     value="1"
                     checked
-                    aria-label="No rating."
                   />
 
                   <input
@@ -111,7 +136,7 @@
                     name="review[rating]"
                     value="1"
                   />
-                  <label for="first-rate1" title="Terrible">1 star</label>
+                  <label for="first-rate1">1 star</label>
 
                   <input
                     type="radio"
@@ -119,7 +144,7 @@
                     name="review[rating]"
                     value="2"
                   />
-                  <label for="first-rate2" title="Not good">2 stars</label>
+                  <label for="first-rate2">2 stars</label>
 
                   <input
                     type="radio"
@@ -127,7 +152,7 @@
                     name="review[rating]"
                     value="3"
                   />
-                  <label for="first-rate3" title="Average">3 stars</label>
+                  <label for="first-rate3">3 stars</label>
 
                   <input
                     type="radio"
@@ -135,7 +160,7 @@
                     name="review[rating]"
                     value="4"
                   />
-                  <label for="first-rate4" title="Very good">4 stars</label>
+                  <label for="first-rate4">4 stars</label>
 
                   <input
                     type="radio"
@@ -143,15 +168,15 @@
                     name="review[rating]"
                     value="5"
                   />
-                  <label for="first-rate5" title="Amazing">5 stars</label>
+                  <label for="first-rate5">5 stars</label>
                 </fieldset>
               </div>
 
               <!-- Comment -->
               <div class="mb-3">
-                <label class="form-label fw-semibold" for="comment"
-                  >Comments</label
-                >
+                <label class="form-label fw-semibold" for="comment">
+                  Comments
+                </label>
                 <textarea
                   class="form-control shadow-sm"
                   name="review[comment]"
@@ -159,9 +184,6 @@
                   rows="4"
                   required
                 ></textarea>
-                <div class="invalid-feedback">
-                  Please add some comments for review
-                </div>
               </div>
 
               <div class="text-center">
@@ -175,19 +197,22 @@
             <% } %>
 
             <!-- All Reviews -->
-            <% if(listing.reviews.length>0){ %>
+            <% if (listing.reviews.length > 0) { %>
             <div class="row">
               <p><b>All Reviews</b></p>
-              <% for(review of listing.reviews) { %>
+
+              <% for (review of listing.reviews) { %>
               <div class="card col-5 ms-3 mb-3">
                 <div class="card-body">
                   <div class="card-title">@<%= review.author.username %></div>
                   <div class="card-text"><%= review.comment %></div>
+
                   <p
                     class="starability-result card-text"
                     data-rating="<%= review.rating %>"
                   ></p>
                 </div>
+
                 <% if (currUser && currUser._id.equals(review.author._id)) { %>
                 <form
                   class="mb-3"
@@ -207,6 +232,7 @@
             <h4 class="fw-semibold mb-3">Location on Map</h4>
             <div id="map" style="height: 350px; border-radius: 12px"></div>
           </div>
+
           <div class="text-center mt-3">
             <a
               href="https://www.google.com/maps/search/?api=1&query=<%= encodeURIComponent(listing.title + ', ' + listing.location + ', ' + listing.country) %>"
@@ -230,19 +256,22 @@
       address
     )}`
   )
-    .then((response) => response.json())
+    .then((res) => res.json())
     .then((data) => {
       if (data && data.length > 0) {
         const lat = data[0].lat;
         const lon = data[0].lon;
 
+        // Create map
         const map = L.map("map").setView([lat, lon], 15);
 
+        // WORKING TILE LAYER
         L.tileLayer(
-          "https://tiles.stadiamaps.com/tiles/outdoors/{z}/{x}/{y}{r}.png",
-          { attribution: "© Stadia Maps" }
+          "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+          { attribution: "&copy; OpenStreetMap contributors" }
         ).addTo(map);
 
+        // Marker
         L.marker([lat, lon])
           .addTo(map)
           .bindPopup("<b><%= listing.title %></b>")
@@ -252,3 +281,4 @@
       }
     });
 </script>
+

@@ -10,7 +10,6 @@ body {
   min-height: 100vh;
   background-color: #f9fafb;
   color: #222;
-  /* user-select: none; */
 }
 
 .container {
@@ -83,7 +82,6 @@ body {
 }
 
 .card:hover {
-  /* transform: translateY(-4px); */
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
 }
 
@@ -169,7 +167,9 @@ body {
   color: #fe424d !important;
 }
 
-/* Base toast */
+/* ------------------------------
+   TOAST / FLASH MESSAGE
+------------------------------ */
 .custom-toast {
   position: fixed;
   top: 85px;
@@ -185,28 +185,24 @@ body {
   color: #fff;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
   opacity: 0;
-  transform: translateX(120%); /* hidden at start */
+  transform: translateX(120%);
   transition: all 0.4s ease;
 }
 
-/* Visible state */
 .custom-toast.show {
   opacity: 1;
   transform: translateX(0);
 }
 
-/* Slide-out state */
 .custom-toast.hide {
   opacity: 0;
   transform: translateX(120%);
 }
 
-/* Success color */
 .alert-success.custom-toast {
   background-color: #1e7e34 !important;
 }
 
-/* Error color */
 .alert-danger.custom-toast {
   background-color: #c82333 !important;
 }
@@ -214,3 +210,76 @@ body {
 .custom-toast i {
   font-size: 20px;
 }
+
+/* ------------------------------
+   CATEGORY SELECT (NEW + EDIT)
+------------------------------ */
+.category-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.category-option {
+  cursor: pointer;
+  margin: 10px;
+}
+
+.category-option input {
+  display: none;
+}
+
+.category-option span {
+  padding: 8px 14px;
+  border: 1px solid #ccc;
+  border-radius: 25px;
+  background: #f8f9fa;
+  transition: 0.2s;
+  font-size: 14px;
+}
+
+.category-option input:checked + span {
+  background: #000;
+  color: #fff;
+  border-color: #000;
+  transform: scale(1.05);
+}
+
+/* ------------------------------
+   FILTER BAR (INDEX PAGE)
+------------------------------ */
+#filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.filter {
+  text-align: center;
+  margin-top: 1rem;
+  opacity: 0.7;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  color: inherit;
+}
+
+.filter:hover {
+  opacity: 1;
+  text-decoration: underline;
+  transform: translateY(-3px);
+}
+
+.filter p {
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+}
+
+.active-filter {
+  opacity: 1 !important;
+  font-weight: 600;
+  border-bottom: 2px solid #dc3545;
+  padding-bottom: 0.25rem;
+  transform: translateY(6px);
+}
+

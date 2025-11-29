@@ -66,7 +66,7 @@ app.use((req, res, next) => {
 
 // HOME Route
 app.get("/", (req, res) => {
-  res.send("Hello, World!");
+  res.redirect("/listings");
 });
 
 app.use("/listings", listingsRouter);

@@ -1,27 +1,52 @@
 <% layout("layouts/boilerplate.ejs") -%>
-<body>
-  <div class="mt-3">
-    <h3>All Listings</h3>
 
-    <div class="row row-cols-lg-3 row-cols-md-3 mt-3 row-cols-sm-2">
-      <% for (const listing of listings) {%>
-      <a href="/listings/<%=listing._id%>" class="listing-link">
-        <div class="card col listing-card">
-          <img
-            src="<%=listing.image.url%>"
-            class="card-img-top home-images"
-            alt="listing img"
-          />
-          <div class="card-img-overlay"></div>
-          <div class="card-body">
-            <h5 class="card-title"><%=listing.title%></h5>
-            <p class="card-text">
-              &#8377;<%=listing.price.toLocaleString('en-IN')%> / night
-            </p>
-          </div>
-        </div></a
-      >
-      <% }%>
-    </div>
+<div class="mt-3">
+  <!-- CATEGORY FILTER BAR -->
+  <div id="filters" class="d-flex flex-wrap gap-3">
+    <!-- ALL FILTER -->
+    <a
+      href="/listings"
+      class="filter <%= !selectedCategory ? 'active-filter' : '' %>"
+    >
+      <div><i class="fa-solid fa-border-all"></i></div>
+      <p>All</p>
+    </a>
+
+    <!-- DYNAMIC CATEGORY FILTERS -->
+    <% Object.keys(categories).forEach(function(cat) { %>
+    <a
+      href="/listings?category=<%= encodeURIComponent(cat) %>"
+      class="filter <%= selectedCategory === cat ? 'active-filter' : '' %>"
+    >
+      <div><i class="fa-solid <%= categories[cat] %>"></i></div>
+      <p><%= cat.charAt(0).toUpperCase() + cat.slice(1) %></p>
+    </a>
+    <% }) %>
   </div>
-</body>
+
+  <!-- LISTINGS GRID -->
+  <div class="row row-cols-lg-3 row-cols-md-3 mt-3 row-cols-sm-2">
+    <% if (noResults) { %>
+    <div class="col-12 text-center mt-5">
+      <h4 class="text-muted">No listings found in this category</h4>
+    </div>
+    <% } else { %> <% for (const listing of listings) { %>
+    <a href="/listings/<%= listing._id %>" class="listing-link">
+      <div class="card col listing-card">
+        <img
+          src="<%= listing.image.url %>"
+          class="card-img-top home-images"
+          alt="listing img"
+        />
+        <div class="card-img-overlay"></div>
+        <div class="card-body">
+          <h5 class="card-title"><%= listing.title %></h5>
+          <p class="card-text">
+            ₹<%= listing.price.toLocaleString('en-IN') %> / night
+          </p>
+        </div>
+      </div>
+    </a>
+    <% } %> <% } %>
+  </div>
+</div>

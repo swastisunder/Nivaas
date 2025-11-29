@@ -1,8 +1,10 @@
 <% layout("layouts/boilerplate.ejs") -%>
+
 <div class="row">
   <div class="col-8 offset-2">
     <h1>Create a New Listing</h1>
     <br />
+
     <form
       action="/listings"
       method="POST"
@@ -21,8 +23,6 @@
           required
           class="form-control"
         />
-        <div class="valid-feedback">Title looks good.</div>
-        <div class="invalid-feedback">Enter a title.</div>
       </div>
 
       <!-- Description -->
@@ -35,16 +35,32 @@
           required
           class="form-control"
         ></textarea>
-        <div class="valid-feedback">Description added.</div>
-        <div class="invalid-feedback">Add a short description.</div>
       </div>
 
-      <!-- Image URL -->
+      <!-- Categories -->
+      <div class="mb-3">
+        <label class="form-label">Select Categories</label>
+
+        <div class="category-container">
+          <% categories.forEach(function(cat) { %>
+          <label class="category-option">
+            <input type="checkbox" name="categories" value="<%= cat %>" />
+            <span><%= cat %></span>
+          </label>
+          <% }) %>
+        </div>
+      </div>
+
+      <!-- Image -->
       <div class="mb-3">
         <label for="image" class="form-label">Upload Listing Image</label>
-        <input id="image" type="file" name="listing[image]" class="form-control" required/>
-        <div class="valid-feedback">Image link looks fine.</div>
-        <div class="invalid-feedback">Enter a valid image URL.</div>
+        <input
+          id="image"
+          type="file"
+          name="listing[image]"
+          class="form-control"
+          required
+        />
       </div>
 
       <!-- Price, Location, Country -->
@@ -60,8 +76,6 @@
             required
             class="form-control"
           />
-          <div class="valid-feedback">Price set.</div>
-          <div class="invalid-feedback">Enter a price.</div>
         </div>
 
         <div class="mb-3 col-4">
@@ -74,8 +88,6 @@
             required
             class="form-control"
           />
-          <div class="valid-feedback">Location added.</div>
-          <div class="invalid-feedback">Enter location.</div>
         </div>
 
         <div class="mb-3 col-4">
@@ -88,8 +100,6 @@
             required
             class="form-control"
           />
-          <div class="valid-feedback">Country noted.</div>
-          <div class="invalid-feedback">Enter country name.</div>
         </div>
       </div>
 

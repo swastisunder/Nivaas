@@ -1,11 +1,11 @@
-// Example starter JavaScript for disabling form submissions if there are invalid fields
+// ===============================
+// BOOTSTRAP FORM VALIDATION
+// ===============================
 (() => {
   "use strict";
 
-  // Fetch all the forms we want to apply custom Bootstrap validation styles to
   const forms = document.querySelectorAll(".needs-validation");
 
-  // Loop over them and prevent submission
   Array.from(forms).forEach((form) => {
     form.addEventListener(
       "submit",
@@ -22,10 +22,16 @@
   });
 })();
 
+// ===============================
+// AUTO-HIDE FLASH / TOAST MESSAGE
+// ===============================
 setTimeout(() => {
   const alert = document.getElementById("flashAlert");
   if (alert) {
-    alert.classList.add("hide"); // triggers slide-out animation
-    setTimeout(() => alert.remove(), 500); // wait for animation to finish
+    alert.classList.add("hide"); // add slide-out animation class
+
+    setTimeout(() => {
+      alert.remove(); // remove it after animation
+    }, 500);
   }
-}, 3000); // auto close after 3 sec
+}, 3000); // 3 seconds

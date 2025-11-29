@@ -24,8 +24,6 @@
           value="<%= listing.title %>"
           class="form-control"
         />
-        <div class="valid-feedback">Title looks good.</div>
-        <div class="invalid-feedback">Enter a title.</div>
       </div>
 
       <!-- Description -->
@@ -40,22 +38,44 @@
         >
 <%= listing.description %></textarea
         >
-        <div class="valid-feedback">Description added.</div>
-        <div class="invalid-feedback">Add a short description.</div>
+      </div>
+
+      <!-- Categories -->
+      <div class="mb-3">
+        <label class="form-label">Select Categories</label>
+
+        <div class="category-container">
+          <% categories.forEach(function(cat) { %>
+          <label class="category-option">
+            <input type="checkbox" name="categories" value="<%= cat %>" <%=
+            listing.categories.includes(cat) ? "checked" : "" %> />
+            <span><%= cat %></span>
+          </label>
+          <% }) %>
+        </div>
       </div>
 
       <!-- Image Upload -->
       <div class="mb-3">
         <label for="image" class="form-label">Upload Listing Image</label>
-        <input id="image" type="file" name="listing[image]" class="form-control" accept="image/*" />
+        <input
+          id="image"
+          type="file"
+          name="listing[image]"
+          class="form-control"
+          accept="image/*"
+        />
         <% if (listing.image && listing.image.url) { %>
         <div class="mt-2">
           <small class="text-muted">Current image:</small>
-          <img src="<%= listing.image.url %>" alt="Current listing image" class="img-thumbnail mt-2" style="max-width: 200px; max-height: 200px; object-fit: cover;" />
+          <img
+            src="<%= listing.image.url %>"
+            alt="Current listing image"
+            class="img-thumbnail mt-2"
+            style="max-width: 200px; max-height: 200px; object-fit: cover"
+          />
         </div>
         <% } %>
-        <div class="valid-feedback">Image looks fine.</div>
-        <div class="invalid-feedback">Upload a valid image.</div>
       </div>
 
       <!-- Price, Location, Country -->
@@ -72,8 +92,6 @@
             value="<%= listing.price %>"
             class="form-control"
           />
-          <div class="valid-feedback">Price set.</div>
-          <div class="invalid-feedback">Enter a price.</div>
         </div>
 
         <div class="mb-3 col-4">
@@ -87,8 +105,6 @@
             value="<%= listing.location %>"
             class="form-control"
           />
-          <div class="valid-feedback">Location added.</div>
-          <div class="invalid-feedback">Enter location.</div>
         </div>
 
         <div class="mb-3 col-4">
@@ -102,8 +118,6 @@
             value="<%= listing.country %>"
             class="form-control"
           />
-          <div class="valid-feedback">Country noted.</div>
-          <div class="invalid-feedback">Enter country name.</div>
         </div>
       </div>
 
