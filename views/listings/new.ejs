@@ -35,13 +35,15 @@
       </div>
 
       <!-- Categories -->
+      <!-- Allow user to select one or more categories for their listing -->
       <div class="form-field">
         <label>Select categories</label>
         <div class="category-container">
-          <% categories.forEach(function(cat) { %>
+          <!-- Loop through each available category and create a checkbox for it -->
+          <% categories.forEach(function(categoryName) { %>
           <label class="category-option">
-            <input type="checkbox" name="categories" value="<%= cat %>" />
-            <span><%= cat %></span>
+            <input type="checkbox" name="categories" value="<%= categoryName %>" />
+            <span><%= categoryName %></span>
           </label>
           <% }) %>
         </div>

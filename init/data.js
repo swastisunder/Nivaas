@@ -1,3 +1,11 @@
+/**
+ * Sample Listings Data
+ * 
+ * This file contains sample/seed data for property listings.
+ * This data is used to populate the database with initial listings
+ * when setting up the application for the first time.
+ */
+
 const sampleListings = [
   {
     title: "Cozy Beachfront Cottage",

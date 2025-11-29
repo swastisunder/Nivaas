@@ -1,8 +1,24 @@
 <% layout("layouts/boilerplate.ejs") -%>
 
+<!--
+  Listings Index Page Template
+  
+  This template displays all property listings in a grid layout.
+  It includes:
+  - A category filter bar at the top for filtering listings by category
+  - A search functionality (handled by the navbar)
+  - A grid of listing cards showing each property's image, title, and price
+  - An empty state message when no listings match the filters
+-->
+
 <section class="page page-index">
   <!-- CATEGORY FILTER BAR -->
+  <!-- 
+    This section displays clickable category filter buttons.
+    Users can click on a category to filter listings, or click "All" to show all listings.
+  -->
   <div class="filters-bar" id="filters">
+    <!-- "All" filter button - shows all listings regardless of category -->
     <a
       href="/listings"
       class="filter-pill <%= !selectedCategory ? 'is-active' : '' %>"
@@ -13,30 +29,40 @@
       <p>All</p>
     </a>
 
-    <% Object.keys(categories).forEach(function(cat) { %>
+    <!-- Loop through each category and create a filter button for it -->
+    <% Object.keys(categories).forEach(function(categoryName) { %>
     <a
-      href="/listings?category=<%= encodeURIComponent(cat) %>"
-      class="filter-pill <%= selectedCategory === cat ? 'is-active' : '' %>"
+      href="/listings?category=<%= encodeURIComponent(categoryName) %>"
+      class="filter-pill <%= selectedCategory === categoryName ? 'is-active' : '' %>"
     >
       <div class="filter-icon">
-        <i class="fa-solid <%= categories[cat] %>"></i>
+        <!-- Display the Font Awesome icon for this category -->
+        <i class="fa-solid <%= categories[categoryName] %>"></i>
       </div>
-      <p><%= cat.charAt(0).toUpperCase() + cat.slice(1) %></p>
+      <!-- Display category name with first letter capitalized -->
+      <p><%= categoryName.charAt(0).toUpperCase() + categoryName.slice(1) %></p>
     </a>
     <% }) %>
   </div>
 
   <!-- LISTINGS GRID -->
+  <!-- 
+    This section displays all the listing cards in a responsive grid.
+    If no listings match the current filters, it shows an empty state message.
+  -->
   <div class="listings-grid">
     <% if (noResults) { %>
+    <!-- Empty state: shown when no listings match the current filters or search -->
     <div class="empty-state">
       <h2>No listings found</h2>
       <p>Try changing filters or search query.</p>
     </div>
     <% } else { %>
+    <!-- Loop through each listing and create a card for it -->
     <% for (const listing of listings) { %>
     <a href="/listings/<%= listing._id %>" class="listing-link">
       <article class="listing-card">
+        <!-- Listing image -->
         <div class="listing-image-wrapper">
           <img
             src="<%= listing.image.url %>"
@@ -44,9 +70,11 @@
             alt="Listing image"
           />
         </div>
+        <!-- Listing details -->
         <div class="listing-content">
           <h3 class="listing-title"><%= listing.title %></h3>
           <p class="listing-price">
+            <!-- Format price with Indian number formatting (commas for thousands) -->
             ₹<%= listing.price.toLocaleString('en-IN') %>
             <span>/ night</span>
           </p>

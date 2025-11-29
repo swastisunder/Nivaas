@@ -43,14 +43,17 @@
     <!-- Content -->
     <div class="show-body">
       <!-- Categories -->
+      <!-- Display category tags if the listing has any categories assigned -->
       <% if (listing.categories && listing.categories.length > 0) { %>
       <div class="show-tags">
-        <% listing.categories.forEach(function(cat) { %>
+        <!-- Loop through each category and display it as a clickable tag -->
+        <% listing.categories.forEach(function(categoryName) { %>
         <a
-          href="/listings?category=<%= encodeURIComponent(cat) %>"
+          href="/listings?category=<%= encodeURIComponent(categoryName) %>"
           class="tag-pill"
         >
-          <%= catIcons[cat] || "🏷" %> <%= cat %>
+          <!-- Display emoji icon for the category, or default tag emoji if not found -->
+          <%= catIcons[categoryName] || "🏷" %> <%= categoryName %>
         </a>
         <% }) %>
       </div>
@@ -181,25 +184,31 @@
         <% } %>
 
         <!-- All reviews -->
+        <!-- Display all reviews for this listing if any exist -->
         <% if (listing.reviews.length > 0) { %>
         <div class="reviews-list">
           <p class="reviews-title">All reviews</p>
 
-          <% for (review of listing.reviews) { %>
+          <!-- Loop through each review and display it as a card -->
+          <% for (const currentReview of listing.reviews) { %>
           <article class="review-card">
+            <!-- Review author information -->
             <div class="review-header">
-              <span class="review-author">@<%= review.author.username %></span>
+              <span class="review-author">@<%= currentReview.author.username %></span>
             </div>
-            <p class="review-text"><%= review.comment %></p>
+            <!-- Review comment text -->
+            <p class="review-text"><%= currentReview.comment %></p>
+            <!-- Star rating display (uses CSS to show stars based on rating value) -->
             <p
               class="starability-result"
-              data-rating="<%= review.rating %>"
+              data-rating="<%= currentReview.rating %>"
             ></p>
 
-            <% if (currUser && currUser._id.equals(review.author._id)) { %>
+            <!-- Show delete button only if the current user is the author of this review -->
+            <% if (currUser && currUser._id.equals(currentReview.author._id)) { %>
             <form
               method="POST"
-              action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE"
+              action="/listings/<%= listing._id %>/reviews/<%= currentReview._id %>?_method=DELETE"
               class="review-delete-form"
             >
               <button class="btn-link-danger" type="submit">Delete</button>
@@ -212,9 +221,23 @@
       </section>
 
       <!-- Map -->
+      <!-- 
+        This section displays an interactive map showing the listing's location.
+        The map is initialized by the external map.js script which reads data
+        from the data attributes on the map div element.
+      -->
       <section class="show-map-section">
         <h3>Location on map</h3>
-        <div id="map"></div>
+        <!-- 
+          Map container with data attributes containing listing information.
+          The map.js script reads these attributes to initialize the map.
+        -->
+        <div 
+          id="map"
+          data-location="<%= listing.location %>"
+          data-country="<%= listing.country %>"
+          data-title="<%= listing.title %>"
+        ></div>
 
         <div class="map-actions">
           <a
@@ -229,33 +252,3 @@
     </div>
   </article>
 </section>
-
-<script>
-  const address = "<%= listing.location %>, <%= listing.country %>";
-
-  fetch(
-    `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
-      address
-    )}`
-  )
-    .then((res) => res.json())
-    .then((data) => {
-      if (data && data.length > 0) {
-        const lat = data[0].lat;
-        const lon = data[0].lon;
-
-        const map = L.map("map").setView([lat, lon], 15);
-
-        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-          attribution: "&copy; OpenStreetMap contributors",
-        }).addTo(map);
-
-        L.marker([lat, lon])
-          .addTo(map)
-          .bindPopup("<b><%= listing.title %></b>")
-          .openPopup();
-      } else {
-        console.error("Location not found:", address);
-      }
-    });
-</script>
