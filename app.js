@@ -33,6 +33,7 @@ const User = require("./model/user.js");
 const listingsRouter = require("./routes/listing.js");
 const reviewsRouter = require("./routes/reviews.js");
 const usersRouter = require("./routes/user.js");
+const checkoutRouter = require("./routes/checkout.js");
 
 // Configuration constants from environment variables with fallbacks for development
 // In production, these should be set via environment variables
@@ -150,6 +151,7 @@ app.get("/", (request, response) => {
 app.use("/listings", listingsRouter);
 app.use("/listings/:id/reviews", reviewsRouter);
 app.use("/", usersRouter);
+app.use("/", checkoutRouter);
 
 /**
  * Route: 404 Page Not Found Handler

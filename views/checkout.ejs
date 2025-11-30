@@ -1,0 +1,177 @@
+<% layout("layouts/boilerplate.ejs") -%>
+
+<section class="page page-form">
+  <div class="form-card">
+    <h1>Complete Your Booking</h1>
+
+    <!-- Listing Summary -->
+    <div class="checkout-listing-summary">
+      <div class="checkout-listing-image">
+        <img src="<%= listing.image.url %>" alt="<%= listing.title %>" />
+      </div>
+      <div class="checkout-listing-details">
+        <h3><%= listing.title %></h3>
+        <p class="checkout-listing-location">
+          <i class="bi bi-geo-alt-fill"></i>
+          <%= listing.location %>, <%= listing.country %>
+        </p>
+        <p class="checkout-listing-price">
+          ₹<%= listing.price.toLocaleString('en-IN') %> / night
+        </p>
+      </div>
+    </div>
+
+    <hr class="checkout-divider" />
+
+    <form
+      action="/checkout/<%= listing._id %>"
+      method="POST"
+      novalidate
+      class="form-vertical"
+      id="checkoutForm"
+    >
+      <!-- Full Name -->
+      <div class="form-field">
+        <label for="name">Full Name *</label>
+        <input
+          id="name"
+          type="text"
+          name="name"
+          placeholder="Enter your full name"
+          required
+        />
+      </div>
+
+      <!-- Mobile Number -->
+      <div class="form-field">
+        <label for="mobile">Mobile Number *</label>
+        <input
+          id="mobile"
+          type="tel"
+          name="mobile"
+          placeholder="Enter your mobile number"
+          required
+        />
+      </div>
+
+      <!-- Check-in and Check-out Dates -->
+      <div class="form-row">
+        <div class="form-field">
+          <label for="checkIn">Check-in Date *</label>
+          <input
+            id="checkIn"
+            type="date"
+            name="checkIn"
+            required
+            min="<%= new Date().toISOString().split('T')[0] %>"
+          />
+        </div>
+
+        <div class="form-field">
+          <label for="checkOut">Check-out Date *</label>
+          <input
+            id="checkOut"
+            type="date"
+            name="checkOut"
+            required
+            min="<%= new Date().toISOString().split('T')[0] %>"
+          />
+        </div>
+      </div>
+
+      <!-- Booking Summary (Auto-calculated) -->
+      <div class="checkout-summary">
+        <div class="checkout-summary-item">
+          <span>Number of nights:</span>
+          <span id="nightsCount">-</span>
+        </div>
+        <div class="checkout-summary-item">
+          <span>Price per night:</span>
+          <span>₹<%= listing.price.toLocaleString('en-IN') %></span>
+        </div>
+        <div class="checkout-summary-total">
+          <span>Total Price:</span>
+          <span id="totalPrice">₹0</span>
+        </div>
+      </div>
+
+      <!-- Payment Method -->
+      <div class="checkout-payment">
+        <p class="checkout-payment-label">Payment Method:</p>
+        <div class="checkout-payment-method">
+          <i class="bi bi-cash-coin"></i>
+          <span>Cash on Counter</span>
+        </div>
+        <p class="checkout-payment-note">
+          Payment will be collected at the property upon check-in.
+        </p>
+      </div>
+
+      <!-- Submit -->
+      <div class="form-actions">
+        <button type="submit" class="btn-primary">Confirm Booking</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<script>
+  // Get form elements
+  const checkInInput = document.getElementById("checkIn");
+  const checkOutInput = document.getElementById("checkOut");
+  const nightsCountSpan = document.getElementById("nightsCount");
+  const totalPriceSpan = document.getElementById("totalPrice");
+  const pricePerNight = <%= listing.price %>;
+
+  // Function to calculate nights and total price
+  function calculateBooking() {
+    const checkIn = checkInInput.value;
+    const checkOut = checkOutInput.value;
+
+    if (checkIn && checkOut) {
+      const checkInDate = new Date(checkIn);
+      const checkOutDate = new Date(checkOut);
+
+      // Validate that check-out is after check-in
+      if (checkOutDate <= checkInDate) {
+        nightsCountSpan.textContent = "-";
+        totalPriceSpan.textContent = "₹0";
+        checkOutInput.setCustomValidity("Check-out date must be after check-in date");
+        return;
+      } else {
+        checkOutInput.setCustomValidity("");
+      }
+
+      // Calculate number of nights
+      const timeDifference = checkOutDate.getTime() - checkInDate.getTime();
+      const nights = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
+
+      // Calculate total price
+      const totalPrice = nights * pricePerNight;
+
+      // Update display
+      nightsCountSpan.textContent = nights;
+      totalPriceSpan.textContent = "₹" + totalPrice.toLocaleString('en-IN');
+    } else {
+      nightsCountSpan.textContent = "-";
+      totalPriceSpan.textContent = "₹0";
+    }
+  }
+
+  // Add event listeners
+  checkInInput.addEventListener("change", function() {
+    // Set minimum check-out date to day after check-in
+    if (checkInInput.value) {
+      const minCheckOut = new Date(checkInInput.value);
+      minCheckOut.setDate(minCheckOut.getDate() + 1);
+      checkOutInput.min = minCheckOut.toISOString().split('T')[0];
+    }
+    calculateBooking();
+  });
+
+  checkOutInput.addEventListener("change", calculateBooking);
+
+  // Initial calculation if dates are pre-filled
+  calculateBooking();
+</script>
+

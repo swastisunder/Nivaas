@@ -43,6 +43,20 @@ module.exports.signUp = async (request, response, next) => {
     const email = request.body.email;
     const password = request.body.password;
 
+    // Check if email already exists
+    const existingEmail = await User.findOne({ email: email });
+    if (existingEmail) {
+      request.flash("error", "Email already in use");
+      return response.redirect("/signup");
+    }
+
+    // Check if username already exists
+    const existingUsername = await User.findOne({ username: username });
+    if (existingUsername) {
+      request.flash("error", "Username already taken");
+      return response.redirect("/signup");
+    }
+
     // Create a new user document (password not set yet)
     const newUser = new User({ email: email, username: username });
 

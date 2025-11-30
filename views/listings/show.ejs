@@ -76,6 +76,16 @@
         </div>
       </div>
 
+      <!-- Book / Checkout Button -->
+      <% if (currUser && !currUser._id.equals(listing.owner._id)) { %>
+      <div class="show-booking-action">
+        <a href="/checkout/<%= listing._id %>" class="btn-primary btn-booking">
+          <i class="bi bi-calendar-check"></i>
+          <span>Book / Checkout</span>
+        </a>
+      </div>
+      <% } %>
+
       <!-- Owner controls -->
       <% if (currUser && currUser._id.equals(listing.owner._id)) { %>
       <div class="show-owner-actions">
