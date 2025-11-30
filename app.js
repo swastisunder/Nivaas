@@ -1,6 +1,6 @@
 /**
  * Main Application Entry Point
- * 
+ *
  * This file sets up and configures the Express web server for the Nivaas application.
  * It handles:
  * - Environment configuration (loading .env in development)
@@ -23,6 +23,7 @@ const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const session = require("express-session");
+const MongoStore = require("connect-mongo");
 const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
@@ -38,7 +39,11 @@ const checkoutRouter = require("./routes/checkout.js");
 // Configuration constants from environment variables with fallbacks for development
 // In production, these should be set via environment variables
 const serverPort = process.env.PORT || 8080;
-const mongoDatabaseURI = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/nivaas";
+const mongoDatabaseURI = process.env.MONGODB_URI;
+// const mongoDatabaseURI = "mongodb://127.0.0.1:27017/nivaas";
+
+// Determine if we're in production environment (needed early for database connection)
+const isProduction = process.env.NODE_ENV === "production";
 
 // Create Express application instance
 const app = express();
@@ -59,15 +64,18 @@ app.use(methodOverride("_method"));
 
 /**
  * Connect to MongoDB Database
- * 
+ *
  * Establishes a connection to the MongoDB database using the connection URI.
  * Logs success or error messages to the console.
  * In production, exits the process if connection fails.
+ *
+ * @returns {Promise<mongoose.Connection>} The mongoose connection instance
  */
 async function connectToDatabase() {
   try {
     await mongoose.connect(mongoDatabaseURI);
     console.log("✅ Database connected successfully");
+    return mongoose.connection;
   } catch (databaseError) {
     console.error("❌ Database connection failed:", databaseError.message);
     // In production, exit the process if database connection fails
@@ -76,11 +84,9 @@ async function connectToDatabase() {
       console.error("Exiting application due to database connection failure");
       process.exit(1);
     }
+    throw databaseError;
   }
 }
-
-// Attempt to connect to the database
-connectToDatabase();
 
 // Calculate session expiration time: 7 days in milliseconds
 const sevenDaysInMilliseconds = 7 * 24 * 60 * 60 * 1000;
@@ -89,15 +95,54 @@ const sessionExpirationTime = Date.now() + sevenDaysInMilliseconds;
 // Configure session options for user authentication
 // SECURITY: Session secret must be set via SESSION_SECRET environment variable in production
 // Generate a strong random secret: node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
-const sessionSecret = process.env.SESSION_SECRET || "mysupersecretcode-dev-only-change-in-production";
+const sessionSecret = process.env.SESSION_SECRET;
 
-// Determine if we're in production environment
-const isProduction = process.env.NODE_ENV === "production";
+// Calculate TTL in seconds (7 days)
+const sessionTTL = 7 * 24 * 60 * 60; // 7 days in seconds
+
+/**
+ * Configure MongoDB Session Store
+ *
+ * Uses connect-mongo to store sessions in MongoDB instead of memory.
+ * This allows sessions to persist across server restarts and enables
+ * horizontal scaling in production environments.
+ *
+ * Features:
+ * - Automatic TTL index creation for session expiration
+ * - Lazy session updates to reduce database writes
+ * - Reuses existing MongoDB connection via mongoose
+ *
+ * Note: The store is created with mongoUrl, but we'll ensure the database
+ * connection is established before the server starts accepting requests.
+ */
+const mongoStore = MongoStore.create({
+  mongoUrl: mongoDatabaseURI, // Use the same MongoDB URI as mongoose
+  collectionName: "sessions", // Collection name for storing sessions
+  ttl: sessionTTL, // Session expiration time in seconds (7 days)
+  autoRemove: "native", // Use MongoDB's native TTL index for automatic cleanup
+  touchAfter: 24 * 3600, // Lazy update: only update session once per 24 hours unless modified
+  stringify: true, // Serialize sessions using JSON.stringify
+});
+
+// Optional: Listen to session store events for debugging and monitoring
+// Uncomment these in development if you need to debug session issues
+if (!isProduction) {
+  mongoStore.on("create", (sessionId) => {
+    console.log(`📝 Session created: ${sessionId}`);
+  });
+  mongoStore.on("update", (sessionId) => {
+    console.log(`🔄 Session updated: ${sessionId}`);
+  });
+  mongoStore.on("destroy", (sessionId) => {
+    console.log(`🗑️  Session destroyed: ${sessionId}`);
+  });
+}
 
 const sessionConfiguration = {
   secret: sessionSecret,
-  resave: false,
-  saveUninitialized: true,
+  store: mongoStore, // Use MongoDB store instead of default memory store
+  resave: false, // Don't save session if unmodified
+  saveUninitialized: true, // Save uninitialized sessions
   cookie: {
     expires: sessionExpirationTime,
     maxAge: sevenDaysInMilliseconds,
@@ -124,7 +169,7 @@ passport.deserializeUser(User.deserializeUser());
 
 /**
  * Middleware: Make Flash Messages and Current User Available to All Views
- * 
+ *
  * This middleware runs before every request and makes the following available
  * to all EJS templates:
  * - success: Array of success flash messages
@@ -140,7 +185,7 @@ app.use((request, response, next) => {
 
 /**
  * Route: Home Page
- * 
+ *
  * Redirects users from the root URL ("/") to the listings page.
  */
 app.get("/", (request, response) => {
@@ -155,7 +200,7 @@ app.use("/", checkoutRouter);
 
 /**
  * Route: 404 Page Not Found Handler
- * 
+ *
  * Catches all routes that don't match any defined routes above.
  * Creates an ExpressError with status 404 and passes it to the error handler.
  */
@@ -165,7 +210,7 @@ app.all(/.*/, (request, response, next) => {
 
 /**
  * Error Handler Middleware
- * 
+ *
  * Handles all errors that occur during request processing.
  * Extracts status code and message from the error object, with defaults.
  * Renders an error page with the status code and message.
@@ -192,14 +237,30 @@ app.use((error, request, response, next) => {
 
 /**
  * Start the Server
- * 
- * Starts listening for incoming HTTP requests on the configured port.
- * Logs a message to confirm the server is running.
+ *
+ * Connects to the database first, then starts listening for incoming HTTP requests.
+ * This ensures the database connection is established before the server accepts requests.
  */
-app.listen(serverPort, () => {
-  console.log(`🚀 Server is running on port ${serverPort}`);
-  console.log(`📝 Environment: ${process.env.NODE_ENV || "development"}`);
-  if (!isProduction) {
-    console.log("⚠️  Running in development mode");
+async function startServer() {
+  try {
+    // Connect to database first
+    await connectToDatabase();
+
+    // Start the server after database connection is established
+    app.listen(serverPort, () => {
+      console.log(`🚀 Server is running on port ${serverPort}`);
+      console.log(`📝 Environment: ${process.env.NODE_ENV || "development"}`);
+      if (!isProduction) {
+        console.log("⚠️  Running in development mode");
+      }
+    });
+  } catch (error) {
+    console.error("❌ Failed to start server:", error.message);
+    if (isProduction) {
+      process.exit(1);
+    }
   }
-});
+}
+
+// Start the server
+startServer();

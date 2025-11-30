@@ -1,66 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-    />
-    <title>Nivaas</title>
 
-    <!-- Theme Flash Prevention Script -->
-    <!-- 
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <link rel="icon" type="image/svg+xml" href="./favicon.png" />
+  <title>Nivaas</title>
+
+  <!-- Theme Flash Prevention Script -->
+  <!-- 
       This script runs immediately (before page renders) to prevent theme flash.
       It reads the saved theme from localStorage and applies it to the HTML element
       before the CSS loads, preventing the flash from light to dark mode.
     -->
-    <script>
-      (function preventThemeFlash() {
-        // Get the saved theme preference from localStorage
-        const savedTheme = localStorage.getItem("theme");
-        
-        // If dark theme was saved, apply it immediately to prevent flash
-        if (savedTheme === "dark") {
-          document.documentElement.setAttribute("data-theme", "dark");
-        }
-      })();
-    </script>
+  <script>
+    (function preventThemeFlash() {
+      // Get the saved theme preference from localStorage
+      const savedTheme = localStorage.getItem("theme");
 
-    <!-- Fonts -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
+      // If dark theme was saved, apply it immediately to prevent flash
+      if (savedTheme === "dark") {
+        document.documentElement.setAttribute("data-theme", "dark");
+      }
+    })();
+  </script>
 
-    <!-- Leaflet (for map on show page) -->
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet" />
 
-    <!-- Icons (Font Awesome + Bootstrap Icons for some icons in show page) -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
-      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css"
-      integrity="sha512-z4SxDz1uVxVJ60mbzgnn3thpx3X9GfWFlT5r0A6ZC+gr6CwTfvmoDAmvLUCYQZmLqDkXt/3HRqs+eLFuDsrfpA=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
+  <!-- Leaflet (for map on show page) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-    <!-- Your CSS -->
-    <link rel="stylesheet" href="/css/style.css" />
-    <link rel="stylesheet" href="/css/rating.css" />
-  </head>
-  <body>
-    <%- include("../includes/navbar.ejs") %>
+  <!-- Icons (Font Awesome + Bootstrap Icons for some icons in show page) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+    integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css"
+    integrity="sha512-z4SxDz1uVxVJ60mbzgnn3thpx3X9GfWFlT5r0A6ZC+gr6CwTfvmoDAmvLUCYQZmLqDkXt/3HRqs+eLFuDsrfpA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- Your CSS -->
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/rating.css" />
+</head>
+
+<body>
+  <%- include("../includes/navbar.ejs") %>
 
     <main class="layout-main">
       <div class="layout-container">
@@ -70,17 +58,16 @@
 
     <%- include("../includes/footer.ejs") %>
 
-    <!-- Google Maps (optional, if key present) -->
-    <% if (typeof googleMapsApiKey !== "undefined" && googleMapsApiKey) { %>
-    <script
-      src="https://maps.googleapis.com/maps/api/js?key=<%= googleMapsApiKey %>&libraries=maps,marker&v=weekly"
-      defer
-    ></script>
-    <% } %>
+      <!-- Google Maps (optional, if key present) -->
+      <% if (typeof googleMapsApiKey !=="undefined" && googleMapsApiKey) { %>
+        <script src="https://maps.googleapis.com/maps/api/js?key=<%= googleMapsApiKey %>&libraries=maps,marker&v=weekly"
+          defer></script>
+        <% } %>
 
-    <!-- Main JavaScript file for form validation, flash messages, and theme toggle -->
-    <script src="/js/script.js"></script>
-    <!-- Map initialization script (only used on listing show page) -->
-    <script src="/js/map.js"></script>
-  </body>
+          <!-- Main JavaScript file for form validation, flash messages, and theme toggle -->
+          <script src="/js/script.js"></script>
+          <!-- Map initialization script (only used on listing show page) -->
+          <script src="/js/map.js"></script>
+</body>
+
 </html>
