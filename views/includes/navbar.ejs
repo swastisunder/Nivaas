@@ -7,32 +7,23 @@
     </div>
 
     <div class="nav-right">
-      <button
-        class="theme-toggle-btn"
-        id="themeToggle"
-        aria-label="Toggle theme"
-      >
+      <button class="theme-toggle-btn" id="themeToggle" aria-label="Toggle theme">
         <i class="fa-solid fa-moon"></i>
       </button>
 
       <a class="nav-pill-btn" href="/listings/new">Host now</a>
 
       <% if (!currUser) { %>
-      <a class="nav-link-simple" href="/signup">Sign Up</a>
-      <a class="nav-link-simple" href="/login">Log In</a>
-      <% } else { %>
-      <a class="nav-link-simple" href="/profile">Profile</a>
-      <a class="nav-link-simple" href="/logout">Log Out</a>
-      <% } %>
+        <a class="nav-link-simple" href="/signup">Sign Up</a>
+        <a class="nav-link-simple" href="/login">Log In</a>
+        <% } else { %>
+          <a class="nav-link-simple" href="/profile">Profile</a>
+          <a class="nav-link-simple" href="/logout">Log Out</a>
+          <% } %>
     </div>
 
-    <button
-      class="nav-toggle"
-      id="navToggle"
-      aria-label="Toggle navigation"
-      aria-expanded="false"
-    >
-      <span></span><span></span><span></span>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+      <i class="fa-solid fa-bars"></i>
     </button>
   </nav>
 
@@ -46,12 +37,12 @@
       <a class="nav-pill-btn" href="/listings/new">Host now</a>
 
       <% if (!currUser) { %>
-      <a class="nav-link-simple" href="/signup">Sign Up</a>
-      <a class="nav-link-simple" href="/login">Log In</a>
-      <% } else { %>
-      <a class="nav-link-simple" href="/profile">Profile</a>
-      <a class="nav-link-simple" href="/logout">Log Out</a>
-      <% } %>
+        <a class="nav-link-simple" href="/signup">Sign Up</a>
+        <a class="nav-link-simple" href="/login">Log In</a>
+        <% } else { %>
+          <a class="nav-link-simple" href="/profile">Profile</a>
+          <a class="nav-link-simple" href="/logout">Log Out</a>
+          <% } %>
     </div>
   </div>
 </header>

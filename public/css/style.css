@@ -685,7 +685,7 @@ img {
   color: var(--text-main);
 }
 
-.category-option input:checked + span {
+.category-option input:checked+span {
   background: var(--primary);
   color: #ffffff;
   border-color: var(--primary);
@@ -1095,6 +1095,60 @@ img {
 }
 
 /* ------------------------------
+   RESPONSIVE NAV (HAMBURGER)
+------------------------------ */
+@media (max-width: 768px) {
+  /* Hide desktop links, show hamburger */
+
+  .nav-mobile-menu {
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+  }
+
+  .nav-mobile-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .nav-right {
+    display: none;
+  }
+
+  .fa-bars {
+    color: var(--text-main);
+    font-size: 1.25rem;
+    transition: color 0.25s ease;
+  }
+
+  [data-theme="dark"] .fa-bars {
+    color: var(--text-main);
+    /* Dark theme text color */
+  }
+
+  /* Optional hover effect */
+  .nav-toggle:hover .fa-bars {
+    color: var(--primary);
+  }
+
+
+  .nav-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Mobile menu visibility */
+  .nav-mobile-menu {
+    display: none;
+  }
+
+  .nav-mobile-menu.is-open {
+    display: block;
+  }
+}
+
+/* ------------------------------
    RESPONSIVE NAV BEHAVIOR
 ------------------------------ */
 /* Responsive Search Bar Enhancements */
@@ -1106,7 +1160,8 @@ img {
   .nav-search {
     width: 100%;
     height: 2.8rem;
-    margin: 0.5rem 0; /* Reduce vertical spacing */
+    margin: 0.5rem 0;
+    /* Reduce vertical spacing */
     padding: 0.3rem 0.75rem;
   }
 
@@ -1117,7 +1172,8 @@ img {
 
 @media (max-width: 600px) {
   .nav-search {
-    width: calc(100% - 1rem); /* small padding left-right */
+    width: calc(100% - 1rem);
+    /* small padding left-right */
     margin-inline: 0.5rem;
     height: 2.6rem;
   }
@@ -1469,6 +1525,7 @@ img {
     width: 100%;
     margin: auto;
   }
+
   .bookings-grid {
     grid-template-columns: 1fr;
   }
