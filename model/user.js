@@ -1,27 +1,12 @@
-/**
- * User Model
- * 
- * This file defines the database schema and model for users.
- * Users can create listings, write reviews, and manage their accounts.
- * 
- * The model uses passport-local-mongoose plugin which automatically adds:
- * - username field (with uniqueness constraint)
- * - password field (with hashing)
- * - Authentication methods (register, authenticate, etc.)
- */
-
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const passportLocalMongoose = require("passport-local-mongoose");
 
-/**
- * User Schema Definition
- * 
- * Defines the structure of a user document in the MongoDB database.
- * Note: username and password fields are added automatically by passport-local-mongoose.
- */
+const Listing = require("./listing");
+const Review = require("./review");
+const Booking = require("./booking");
+
 const userSchema = new Schema({
-  // User's email address
   email: {
     type: String,
     required: true,
@@ -29,17 +14,25 @@ const userSchema = new Schema({
   },
 });
 
-/**
- * Plugin: Passport Local Mongoose
- * 
- * This plugin automatically adds the following to the schema:
- * - username field (unique, required)
- * - password field (hashed automatically)
- * - Methods: register(), authenticate(), serializeUser(), deserializeUser()
- * 
- * This simplifies user authentication without having to manually hash passwords.
- */
 userSchema.plugin(passportLocalMongoose);
 
-// Create and export the User model
+// CASCADE DELETE: If user is deleted
+userSchema.post("findOneAndDelete", async (deletedUser) => {
+  if (deletedUser) {
+    const userId = deletedUser._id;
+
+    // delete all listings owned by user (and their reviews/bookings via listing hook)
+    const userListings = await Listing.find({ owner: userId });
+    for (let listing of userListings) {
+      await Listing.findByIdAndDelete(listing._id);
+    }
+
+    // delete all reviews written by user
+    await Review.deleteMany({ author: userId });
+
+    // delete all bookings made by user
+    await Booking.deleteMany({ user: userId });
+  }
+});
+
 module.exports = mongoose.model("User", userSchema);

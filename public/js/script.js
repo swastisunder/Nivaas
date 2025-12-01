@@ -151,8 +151,25 @@ document.addEventListener("DOMContentLoaded", function initializeThemeToggle() {
 const input = document.getElementById("image");
 const fileName = document.querySelector(".file-name");
 
-input.addEventListener("change", () => {
-  fileName.textContent = input.files.length
-    ? input.files[0].name
-    : "No file chosen";
+if (input && fileName) {
+  input.addEventListener("change", () => {
+    fileName.textContent = input.files.length
+      ? input.files[0].name
+      : "No file chosen";
+  });
+}
+
+// ===============================
+// MOBILE NAV HAMBURGER TOGGLE
+// ===============================
+document.addEventListener("DOMContentLoaded", function initializeMobileNav() {
+  const navToggleButton = document.getElementById("navToggle");
+  const navMobileMenu = document.getElementById("navMobileMenu");
+
+  if (navToggleButton && navMobileMenu) {
+    navToggleButton.addEventListener("click", function handleNavToggle() {
+      const isOpen = navMobileMenu.classList.toggle("is-open");
+      navToggleButton.setAttribute("aria-expanded", isOpen ? "true" : "false");
+    });
+  }
 });

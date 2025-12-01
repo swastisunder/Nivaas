@@ -12,6 +12,22 @@
 -->
 
 <section class="page page-index">
+  <!-- SEARCH BAR -->
+  <form class="nav-search" action="/listings" method="GET">
+    <input
+      type="text"
+      name="search"
+      value="<%= searchTerm %>"
+      class="nav-search-input"
+      placeholder="Search by title, location, or country"
+      aria-label="Search listings"
+    />
+    <button class="nav-search-btn" type="submit">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <span>Search</span>
+    </button>
+  </form>
+
   <!-- CATEGORY FILTER BAR -->
   <!-- 
     This section displays clickable category filter buttons.
@@ -81,7 +97,6 @@
         </div>
       </article>
     </a>
-    <% } %>
-    <% } %>
+    <% } %> <% } %>
   </div>
 </section>
