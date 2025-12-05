@@ -685,7 +685,7 @@ img {
   color: var(--text-main);
 }
 
-.category-option input:checked+span {
+.category-option input:checked + span {
   background: var(--primary);
   color: #ffffff;
   border-color: var(--primary);
@@ -1130,7 +1130,6 @@ img {
   .nav-toggle:hover .fa-bars {
     color: var(--primary);
   }
-
 
   .nav-toggle {
     display: inline-flex;
@@ -1691,4 +1690,31 @@ img {
 .booking-payment i {
   color: var(--primary);
   font-size: 0.95rem;
+}
+
+/* Global Scrollbar – Theme Aware */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-elevated);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-subtle);
+  border-radius: 10px;
+  transition: background 0.2s ease;
+}
+
+/* Hover → Pink */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary); /* pink on hover */
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-subtle) var(--bg-elevated);
 }

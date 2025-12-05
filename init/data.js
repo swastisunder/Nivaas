@@ -1,417 +1,790 @@
-/**
- * Sample Listings Data
- * 
- * This file contains sample/seed data for property listings.
- * This data is used to populate the database with initial listings
- * when setting up the application for the first time.
- */
-
 const sampleListings = [
+  // 1
   {
-    title: "Cozy Beachfront Cottage",
+    title: "Beachside Cottage near Calangute Beach",
     description:
-      "Escape to this charming beachfront cottage for a relaxing getaway. Enjoy stunning ocean views and easy access to the beach.",
+      "A cozy beachside cottage just a short walk from Calangute Beach. Perfect for couples and small families seeking a relaxed Goan vibe.",
     image: {
-      fileName: "listingimage",
-      url: "https://images.unsplash.com/photo-1552733407-5d5c46c3bb3b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fHRyYXZlbHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60",
+      fileName: "calangute_cottage",
+      url: "https://images.unsplash.com/photo-1568605115459-4b731184f961?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
-    price: 1500,
-    location: "Malibu",
-    country: "United States",
+    price: 2800,
+    location: "Calangute, Goa",
+    country: "India",
     reviews: [],
-    categories: ["beachfront", "tropical", "trending", "entire homes"],
+    categories: ["beachfront", "trending", "entire homes"],
   },
+
+  // 2
   {
-    title: "Modern Loft in Downtown",
+    title: "Luxury Pool Villa in Candolim",
     description:
-      "Stay in the heart of the city in this stylish loft apartment. Perfect for urban explorers!",
+      "A premium private villa with a turquoise pool, lush garden, and elegant interiors. Ideal for large groups exploring North Goa.",
     image: {
-      fileName: "listingimage",
-      url: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fHRyYXZlbHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60",
+      fileName: "candolim_pool_villa",
+      url: "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
-    price: 1200,
-    location: "New York City",
-    country: "United States",
+    price: 11000,
+    location: "Candolim, Goa",
+    country: "India",
     reviews: [],
-    categories: ["iconic cities", "luxury", "trending", "entire homes"],
+    categories: ["luxury", "amazing pools", "beachfront"],
   },
+
+  // 3
   {
-    title: "Mountain Retreat",
+    title: "Boutique Hotel in Baga Lane",
     description:
-      "Unplug and unwind in this peaceful mountain cabin. Surrounded by nature, it's a perfect place to recharge.",
+      "Modern boutique rooms with balcony views, located just off the bustling Baga nightlife stretch.",
     image: {
-      fileName: "listingimage",
-      url: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8aG90ZWxzfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
+      fileName: "baga_boutique",
+      url: "https://images.unsplash.com/photo-1584132967334-10e028bd69f7?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
-    price: 1000,
-    location: "Aspen",
-    country: "United States",
+    price: 3300,
+    location: "Baga, Goa",
+    country: "India",
     reviews: [],
-    categories: ["mountains", "camping", "entire homes", "trending"],
+    categories: ["iconic cities", "beachfront", "trending"],
   },
+
+  // 4
   {
-    title: "Historic Villa in Tuscany",
+    title: "Portuguese Heritage Stay in Fontainhas",
     description:
-      "Experience the charm of Tuscany in this beautifully restored villa. Explore the rolling hills and vineyards.",
+      "A charming restored Portuguese home with colorful walls, wooden windows, and a courtyard in Goa’s Latin Quarter.",
     image: {
-      fileName: "listingimage",
-      url: "https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8aG90ZWxzfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
+      fileName: "fontainhas_heritage",
+      url: "https://images.unsplash.com/photo-1731663044393-96efeef65cd9?q=80&w=1175&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
-    price: 2500,
-    location: "Florence",
-    country: "Italy",
+    price: 3600,
+    location: "Fontainhas, Goa",
+    country: "India",
     reviews: [],
-    categories: ["entire homes", "castles", "luxury", "trending"],
+    categories: ["entire homes", "luxury", "iconic cities"],
   },
+
+  // 5
   {
-    title: "Secluded Treehouse Getaway",
+    title: "Business Hotel in Bandra Kurla Complex",
     description:
-      "Live among the treetops in this unique treehouse retreat. A true nature lover's paradise.",
+      "Premium business hotel with meeting rooms, breakfast buffet, and quick airport access.",
     image: {
-      fileName: "listingimage",
-      url: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fGhvdGVsc3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60",
+      fileName: "bkc_business",
+      url: "https://images.unsplash.com/photo-1739063273563-bc24c0ee609d?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
-    price: 800,
-    location: "Portland",
-    country: "United States",
+    price: 6200,
+    location: "Bandra Kurla Complex, Mumbai",
+    country: "India",
     reviews: [],
-    categories: ["camping", "farms", "trending", "entire homes"],
+    categories: ["iconic cities", "luxury", "trending"],
   },
+
+  // 6
   {
-    title: "Beachfront Paradise",
+    title: "Sea-Facing Apartment in Juhu",
     description:
-      "Step out of your door onto the sandy beach. This beachfront condo offers the ultimate relaxation.",
+      "A modern sea-facing apartment with balcony seating, perfect for sunsets over Juhu Beach.",
     image: {
-      fileName: "listingimage",
-      url: "https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fGhvdGVsc3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60",
+      fileName: "juhu_sea_view",
+      url: "https://images.unsplash.com/photo-1649769425782-8cdb757da2b4?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
-    price: 2000,
-    location: "Cancun",
-    country: "Mexico",
+    price: 8500,
+    location: "Juhu, Mumbai",
+    country: "India",
     reviews: [],
-    categories: ["beachfront", "tropical", "amazing pools", "trending"],
+    categories: ["beachfront", "luxury", "entire homes"],
   },
+
+  // 7
   {
-    title: "Rustic Cabin by the Lake",
+    title: "Artistic Hostel in Colaba",
     description:
-      "Spend your days fishing and kayaking on the serene lake. This cozy cabin is perfect for outdoor enthusiasts.",
+      "A backpacker-friendly hostel in the heart of Colaba with vibrant common areas and private rooms.",
     image: {
-      fileName: "listingimage",
-      url: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fG1vdW50YWlufGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
+      fileName: "colaba_hostel",
+      url: "https://images.unsplash.com/photo-1657282920595-adc2c0736e27?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
     price: 900,
-    location: "Lake Tahoe",
-    country: "United States",
+    location: "Colaba, Mumbai",
+    country: "India",
     reviews: [],
-    categories: ["lakefront", "mountains", "camping", "entire homes"],
+    categories: ["iconic cities", "trending"],
   },
+
+  // 8
   {
-    title: "Luxury Penthouse with City Views",
+    title: "Smart Studio Apartment in Koramangala",
     description:
-      "Indulge in luxury living with panoramic city views from this stunning penthouse apartment.",
+      "A stylish studio in Bangalore’s prime cafe and nightlife hub, ideal for solo travelers and couples.",
     image: {
-      fileName: "listingimage",
-      url: "https://images.unsplash.com/photo-1622396481328-9b1b78cdd9fd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8c2t5JTIwdmFjYXRpb258ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60",
+      fileName: "koramangala_studio",
+      url: "https://images.unsplash.com/photo-1723641878279-a79dd56fa460?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
-    price: 3500,
-    location: "Los Angeles",
-    country: "United States",
+    price: 2600,
+    location: "Koramangala, Bengaluru",
+    country: "India",
     reviews: [],
-    categories: ["luxury", "iconic cities", "trending", "entire homes"],
+    categories: ["iconic cities", "entire homes"],
   },
+
+  // 9
   {
-    title: "Ski-In/Ski-Out Chalet",
+    title: "Service Apartment in Whitefield IT Park",
     description:
-      "Hit the slopes right from your doorstep in this ski-in/ski-out chalet in the Swiss Alps.",
+      "Clean and compact serviced apartment near major IT offices, perfect for long stays.",
     image: {
-      fileName: "listingimage",
-      url: "https://images.unsplash.com/photo-1502784444187-359ac186c5bb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHNreSUyMHZhY2F0aW9ufGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
+      fileName: "whitefield_service",
+      url: "https://images.unsplash.com/photo-1759264244827-1dde5bee00a5?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
-    price: 3000,
-    location: "Verbier",
-    country: "Switzerland",
+    price: 3100,
+    location: "Whitefield, Bengaluru",
+    country: "India",
     reviews: [],
-    categories: ["arctic", "mountains", "luxury", "trending"],
+    categories: ["iconic cities", "entire homes"],
   },
+
+  // 10
   {
-    title: "Safari Lodge in the Serengeti",
+    title: "Premium Suite in Indiranagar",
     description:
-      "Experience the thrill of the wild in a comfortable safari lodge. Witness the Great Migration up close.",
+      "A high-end suite with chic interiors and quick access to Indiranagar’s trendy cafes and pubs.",
     image: {
-      fileName: "listingimage",
-      url: "https://images.unsplash.com/photo-1493246507139-91e8fad9978e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mjl8fG1vdW50YWlufGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
+      fileName: "indiranagar_suite",
+      url: "https://images.unsplash.com/photo-1664227430717-9a62112984cf?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
-    price: 4000,
-    location: "Serengeti National Park",
-    country: "Tanzania",
+    price: 7200,
+    location: "Indiranagar, Bengaluru",
+    country: "India",
     reviews: [],
-    categories: ["desert", "farms", "islands", "trending"],
+    categories: ["luxury", "iconic cities"],
   },
+
+  // 11
   {
-    title: "Historic Canal House",
+    title: "IT Park Hotel in HITEC City",
     description:
-      "Stay in a piece of history in this beautifully preserved canal house in Amsterdam's iconic district.",
+      "Contemporary hotel close to tech campuses and malls, ideal for business travel.",
     image: {
-      fileName: "listingimage",
-      url: "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Y2FtcGluZ3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60",
+      fileName: "hitec_hotel",
+      url: "https://images.unsplash.com/photo-1618773928121-c32242e63f39?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
-    price: 1800,
-    location: "Amsterdam",
-    country: "Netherlands",
+    price: 4800,
+    location: "HITEC City, Hyderabad",
+    country: "India",
     reviews: [],
-    categories: ["iconic cities", "entire homes", "trending", "luxury"],
+    categories: ["iconic cities", "luxury"],
   },
+
+  // 12
   {
-    title: "Private Island Retreat",
+    title: "Palace-Inspired Villa in Banjara Hills",
     description:
-      "Have an entire island to yourself for a truly exclusive and unforgettable vacation experience.",
+      "A luxurious villa with ornate interiors in upscale Banjara Hills.",
     image: {
-      fileName: "listingimage",
-      url: "https://images.unsplash.com/photo-1618140052121-39fc6db33972?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8bG9kZ2V8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60",
+      fileName: "banjara_villa",
+      url: "https://images.unsplash.com/photo-1763228354340-8b7405f6abf8?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
-    price: 10000,
-    location: "Fiji",
-    country: "Fiji",
+    price: 9500,
+    location: "Banjara Hills, Hyderabad",
+    country: "India",
     reviews: [],
-    categories: ["islands", "beachfront", "luxury", "tropical"],
+    categories: ["luxury", "entire homes"],
   },
+
+  // 13
   {
-    title: "Charming Cottage in the Cotswolds",
+    title: "Budget Room in T. Nagar",
     description:
-      "Escape to the picturesque Cotswolds in this quaint and charming cottage with a thatched roof.",
+      "AC rooms ideal for shoppers exploring Chennai’s gold and saree markets.",
     image: {
-      fileName: "listingimage",
-      url: "https://images.unsplash.com/photo-1602088113235-229c19758e9f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YmVhY2glMjB2YWNhdGlvbnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60",
-    },
-    price: 1200,
-    location: "Cotswolds",
-    country: "United Kingdom",
-    reviews: [],
-    categories: ["entire homes", "farms", "trending", "luxury"],
-  },
-  {
-    title: "Historic Brownstone in Boston",
-    description:
-      "Step back in time in this elegant historic brownstone located in the heart of Boston.",
-    image: {
-      fileName: "listingimage",
-      url: "https://images.unsplash.com/photo-1533619239233-6280475a633a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fHNreSUyMHZhY2F0aW9ufGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
-    },
-    price: 2200,
-    location: "Boston",
-    country: "United States",
-    reviews: [],
-    categories: ["iconic cities", "entire homes", "luxury", "trending"],
-  },
-  {
-    title: "Beachfront Bungalow in Bali",
-    description:
-      "Relax on the sandy shores of Bali in this beautiful beachfront bungalow with a private pool.",
-    image: {
-      fileName: "listingimage",
-      url: "https://images.unsplash.com/photo-1602391833977-358a52198938?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzJ8fGNhbXBpbmd8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60",
-    },
-    price: 1800,
-    location: "Bali",
-    country: "Indonesia",
-    reviews: [],
-    categories: ["beachfront", "tropical", "amazing pools", "islands"],
-  },
-  {
-    title: "Mountain View Cabin in Banff",
-    description:
-      "Enjoy breathtaking mountain views from this cozy cabin in the Canadian Rockies.",
-    image: {
-      fileName: "listingimage",
-      url: "https://images.unsplash.com/photo-1521401830884-6c03c1c87ebb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGxvZGdlfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
+      fileName: "tnagar_budget",
+      url: "https://plus.unsplash.com/premium_photo-1676823553207-758c7a66e9bb?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
     price: 1500,
-    location: "Banff",
-    country: "Canada",
+    location: "T. Nagar, Chennai",
+    country: "India",
     reviews: [],
-    categories: ["mountains", "arctic", "camping", "entire homes"],
+    categories: ["iconic cities"],
   },
+
+  // 14
   {
-    title: "Art Deco Apartment in Miami",
+    title: "Cliffside Sea View Stay in ECR",
     description:
-      "Step into the glamour of the 1920s in this stylish Art Deco apartment in South Beach.",
+      "A private beach house on East Coast Road with direct shoreline access.",
     image: {
-      fileName: "listingimage",
-      url: "https://plus.unsplash.com/premium_photo-1670963964797-942df1804579?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGxvZGdlfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
+      fileName: "ecr_beachhouse",
+      url: "https://images.unsplash.com/photo-1515516969-d465f0de1f60?auto=format&fit=crop&w=800&q=60",
     },
-    price: 1600,
-    location: "Miami",
-    country: "United States",
+    price: 7200,
+    location: "East Coast Road, Chennai",
+    country: "India",
     reviews: [],
-    categories: ["iconic cities", "luxury", "beachfront", "trending"],
+    categories: ["beachfront", "entire homes"],
   },
+
+  // 15
   {
-    title: "Tropical Villa in Phuket",
+    title: "Art Boutique Stay on Park Street",
     description:
-      "Escape to a tropical paradise in this luxurious villa with a private infinity pool in Phuket.",
+      "A stylish boutique hotel surrounded by iconic restaurants and nightlife.",
     image: {
-      fileName: "listingimage",
-      url: "https://images.unsplash.com/photo-1470165301023-58dab8118cc9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fGxvZGdlfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
+      fileName: "parkstreet_boutique",
+      url: "https://images.unsplash.com/photo-1543489816-c87b0f5f7dd2?auto=format&fit=crop&w=800&q=60",
     },
-    price: 3000,
-    location: "Phuket",
-    country: "Thailand",
+    price: 4100,
+    location: "Park Street, Kolkata",
+    country: "India",
     reviews: [],
-    categories: ["tropical", "islands", "amazing pools", "luxury"],
+    categories: ["iconic cities", "luxury"],
   },
+
+  // 16
   {
-    title: "Historic Castle in Scotland",
+    title: "Serviced Apartment in Salt Lake Sector V",
     description:
-      "Live like royalty in this historic castle in the Scottish Highlands. Explore the rugged beauty of the area.",
+      "Quiet serviced stay close to Kolkata’s IT hub. Ideal for business travellers.",
     image: {
-      fileName: "listingimage",
-      url: "https://images.unsplash.com/photo-1585543805890-6051f7829f98?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fGJlYWNoJTIwdmFjYXRpb258ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60",
+      fileName: "saltlake_service",
+      url: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=60",
     },
-    price: 4000,
-    location: "Scottish Highlands",
-    country: "United Kingdom",
+    price: 2900,
+    location: "Salt Lake, Kolkata",
+    country: "India",
     reviews: [],
-    categories: ["castles", "mountains", "luxury", "entire homes"],
+    categories: ["iconic cities", "entire homes"],
   },
+
+  // 17
   {
-    title: "Desert Oasis in Dubai",
+    title: "Heritage Haveli near Hawa Mahal",
     description:
-      "Experience luxury in the middle of the desert in this opulent oasis in Dubai with a private pool.",
+      "A Rajasthani haveli with courtyard, frescoes and rooftop dining.",
     image: {
-      fileName: "listingimage",
-      url: "https://images.unsplash.com/photo-1518684079-3c830dcef090?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZHViYWl8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60",
+      fileName: "jaipur_haveli",
+      url: "https://images.unsplash.com/photo-1549294413-26f195200c16?auto=format&fit=crop&w=800&q=60",
     },
-    price: 5000,
-    location: "Dubai",
-    country: "United Arab Emirates",
+    price: 3900,
+    location: "Johari Bazar, Jaipur",
+    country: "India",
     reviews: [],
-    categories: ["desert", "luxury", "amazing pools", "trending"],
+    categories: ["castles", "entire homes"],
   },
+
+  // 18
   {
-    title: "Rustic Log Cabin in Montana",
+    title: "Royal Palace Stay in C-Scheme",
     description:
-      "Unplug and unwind in this cozy log cabin surrounded by the natural beauty of Montana.",
+      "A beautifully restored palace residence with royal decor and spacious rooms.",
     image: {
-      fileName: "listingimage",
-      url: "https://images.unsplash.com/photo-1586375300773-8384e3e4916f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fGxvZGdlfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
+      fileName: "cscheme_palace",
+      url: "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=60",
     },
-    price: 1100,
-    location: "Montana",
-    country: "United States",
+    price: 12000,
+    location: "C-Scheme, Jaipur",
+    country: "India",
     reviews: [],
-    categories: ["mountains", "camping", "farms", "entire homes"],
+    categories: ["castles", "luxury"],
   },
+
+  // 19
   {
-    title: "Beachfront Villa in Greece",
+    title: "Lake View Haveli at Lake Pichola",
     description:
-      "Enjoy the crystal-clear waters of the Mediterranean in this beautiful beachfront villa on a Greek island.",
+      "Rooms overlooking Lake Pichola with sunset views and rooftop dining.",
     image: {
-      fileName: "listingimage",
-      url: "https://images.unsplash.com/photo-1602343168117-bb8ffe3e2e9f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8dmlsbGF8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60",
+      fileName: "pichola_haveli",
+      url: "https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=800&q=60",
     },
-    price: 2500,
-    location: "Mykonos",
-    country: "Greece",
+    price: 5200,
+    location: "Lake Pichola, Udaipur",
+    country: "India",
     reviews: [],
-    categories: ["beachfront", "islands", "luxury", "tropical"],
+    categories: ["lakefront", "luxury"],
   },
+
+  // 20
   {
-    title: "Eco-Friendly Treehouse Retreat",
+    title: "Resort near Fateh Sagar Lake",
     description:
-      "Stay in an eco-friendly treehouse nestled in the forest. It's the perfect escape for nature lovers.",
+      "A family-friendly resort with gardens, pool, and lake access.",
     image: {
-      fileName: "listingimage",
-      url: "https://images.unsplash.com/photo-1488462237308-ecaa28b729d7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8c2t5JTIwdmFjYXRpb258ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60",
+      fileName: "fatehsagar_resort",
+      url: "https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=800&q=60",
     },
-    price: 750,
-    location: "Costa Rica",
-    country: "Costa Rica",
+    price: 6800,
+    location: "Fateh Sagar, Udaipur",
+    country: "India",
     reviews: [],
-    categories: ["camping", "farms", "tropical", "entire homes"],
+    categories: ["lakefront", "amazing pools"],
   },
+
+  // 21
   {
-    title: "Historic Cottage in Charleston",
+    title: "Riverside Cottage in Tapovan",
     description:
-      "Experience the charm of historic Charleston in this beautifully restored cottage with a private garden.",
+      "A wooden riverside cottage with mountain views and peaceful surroundings.",
     image: {
-      fileName: "listingimage",
-      url: "https://images.unsplash.com/photo-1587381420270-3e1a5b9e6904?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGxvZGdlfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
+      fileName: "tapovan_riverside",
+      url: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=800&q=60",
     },
-    price: 1600,
-    location: "Charleston",
-    country: "United States",
+    price: 2600,
+    location: "Tapovan, Rishikesh",
+    country: "India",
     reviews: [],
-    categories: ["entire homes", "iconic cities", "luxury", "trending"],
+    categories: ["camping", "mountains", "entire homes"],
   },
+
+  // 22
   {
-    title: "Modern Apartment in Tokyo",
+    title: "Hill View Hotel on Mall Road",
     description:
-      "Explore the vibrant city of Tokyo from this modern and centrally located apartment.",
+      "Rooms overlooking the Doon valley with balcony seating and cool breeze.",
     image: {
-      fileName: "listingimage",
-      url: "https://images.unsplash.com/photo-1480796927426-f609979314bd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fHRva3lvfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
+      fileName: "mussoorie_hillhotel",
+      url: "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=800&q=60",
     },
-    price: 2000,
-    location: "Tokyo",
-    country: "Japan",
+    price: 3200,
+    location: "Mall Road, Mussoorie",
+    country: "India",
     reviews: [],
-    categories: ["iconic cities", "luxury", "trending", "entire homes"],
+    categories: ["mountains", "trending"],
   },
+
+  // 23
   {
-    title: "Lakefront Cabin in New Hampshire",
-    description:
-      "Spend your days by the lake in this cozy cabin in the scenic White Mountains of New Hampshire.",
+    title: "Lakeside Stay at Naini Lake",
+    description: "A cozy hotel beside Naini Lake with boat ride access.",
     image: {
-      fileName: "listingimage",
-      url: "https://images.unsplash.com/photo-1578645510447-e20b4311e3ce?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDF8fGNhbXBpbmd8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60",
+      fileName: "nainital_lake",
+      url: "https://images.unsplash.com/photo-1519817650390-64a93db511aa?auto=format&fit=crop&w=800&q=60",
     },
-    price: 1200,
-    location: "New Hampshire",
-    country: "United States",
+    price: 3500,
+    location: "Mall Road, Nainital",
+    country: "India",
     reviews: [],
-    categories: ["lakefront", "mountains", "camping", "entire homes"],
+    categories: ["lakefront", "mountains"],
   },
+
+  // 24
   {
-    title: "Luxury Villa in the Maldives",
+    title: "Tea Garden Homestay in Darjeeling",
     description:
-      "Indulge in luxury in this overwater villa in the Maldives with stunning views of the Indian Ocean.",
+      "A peaceful homestay overlooking tea gardens with misty mornings.",
     image: {
-      fileName: "listingimage",
-      url: "https://images.unsplash.com/photo-1439066615861-d1af74d74000?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8bGFrZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60",
+      fileName: "darjeeling_teagarden",
+      url: "https://images.unsplash.com/photo-1523906630133-f6934a1ab1b4?auto=format&fit=crop&w=800&q=60",
     },
-    price: 6000,
-    location: "Maldives",
-    country: "Maldives",
+    price: 2700,
+    location: "Happy Valley, Darjeeling",
+    country: "India",
     reviews: [],
-    categories: ["luxury", "islands", "beachfront", "amazing pools"],
+    categories: ["farms", "mountains"],
   },
+
+  // 25
   {
-    title: "Ski Chalet in Aspen",
+    title: "Mountain Lodge in Old Manali",
     description:
-      "Hit the slopes in style with this luxurious ski chalet in the world-famous Aspen ski resort.",
+      "A wooden lodge offering snow-capped mountain views and apple orchards.",
     image: {
-      fileName: "listingimage",
-      url: "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fGxha2V8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60",
+      fileName: "oldmanali_lodge",
+      url: "https://images.unsplash.com/photo-1519817650390-64a93db511aa?auto=format&fit=crop&w=800&q=60",
     },
-    price: 4000,
-    location: "Aspen",
-    country: "United States",
+    price: 2600,
+    location: "Old Manali, Manali",
+    country: "India",
     reviews: [],
-    categories: ["arctic", "mountains", "luxury", "trending"],
+    categories: ["mountains", "camping"],
   },
+
+  // 26
   {
-    title: "Secluded Beach House in Costa Rica",
+    title: "Ski Retreat in Gulmarg",
     description:
-      "Escape to a secluded beach house on the Pacific coast of Costa Rica. Surf, relax, and unwind.",
+      "Premium rooms offering snow views and proximity to ski slopes.",
     image: {
-      fileName: "listingimage",
-      url: "https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YmVhY2glMjBob3VzZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60",
+      fileName: "gulmarg_ski",
+      url: "https://images.unsplash.com/photo-1482192596544-9eb780fc7f66?auto=format&fit=crop&w=800&q=60",
     },
-    price: 1800,
-    location: "Costa Rica",
-    country: "Costa Rica",
+    price: 9200,
+    location: "Gulmarg, Jammu & Kashmir",
+    country: "India",
     reviews: [],
-    categories: ["beachfront", "tropical", "islands", "camping"],
+    categories: ["arctic", "mountains", "luxury"],
+  },
+
+  // 27
+  {
+    title: "Houseboat Stay in Dal Lake",
+    description:
+      "Traditional houseboat with carved wooden interiors and serene lake views.",
+    image: {
+      fileName: "kashmir_houseboat",
+      url: "https://images.unsplash.com/photo-1618220179428-22790b461013?auto=format&fit=crop&w=800&q=60",
+    },
+    price: 5400,
+    location: "Dal Lake, Srinagar",
+    country: "India",
+    reviews: [],
+    categories: ["lakefront", "luxury"],
+  },
+
+  // 28
+  {
+    title: "Desert Camp at Sam Sand Dunes",
+    description:
+      "Swiss tents with cultural Rajasthani programs and camel rides.",
+    image: {
+      fileName: "sam_camp",
+      url: "https://images.unsplash.com/photo-1544986581-efac024faf62?auto=format&fit=crop&w=800&q=60",
+    },
+    price: 3900,
+    location: "Sam Sand Dunes, Jaisalmer",
+    country: "India",
+    reviews: [],
+    categories: ["desert", "camping"],
+  },
+
+  // 29
+  {
+    title: "Fort View Hotel in Jaisalmer",
+    description: "Rooms with direct views of the golden Jaisalmer Fort.",
+    image: {
+      fileName: "jaisalmer_fort",
+      url: "https://images.unsplash.com/photo-1526779259212-939e64788e3c?auto=format&fit=crop&w=800&q=60",
+    },
+    price: 2700,
+    location: "Dhibba Para, Jaisalmer",
+    country: "India",
+    reviews: [],
+    categories: ["desert", "castles"],
+  },
+
+  // 30
+  {
+    title: "Coffee Estate Homestay in Coorg",
+    description: "A serene homestay located inside a lush coffee estate.",
+    image: {
+      fileName: "coorg_estate",
+      url: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=60",
+    },
+    price: 3100,
+    location: "Madikeri, Coorg",
+    country: "India",
+    reviews: [],
+    categories: ["farms", "mountains"],
+  },
+
+  // 31
+  {
+    title: "Tea Estate Bungalow in Munnar",
+    description: "Colonial bungalow surrounded by rolling tea gardens.",
+    image: {
+      fileName: "munnar_tea",
+      url: "https://images.unsplash.com/photo-1523906630133-f6934a1ab1b4?auto=format&fit=crop&w=800&q=60",
+    },
+    price: 4900,
+    location: "Munnar Town, Munnar",
+    country: "India",
+    reviews: [],
+    categories: ["mountains", "farms"],
+  },
+
+  // 32
+  {
+    title: "Backwater Resort in Alleppey",
+    description:
+      "A luxurious backwater resort with boat rides and sunset decks.",
+    image: {
+      fileName: "alleppey_backwaters",
+      url: "https://images.unsplash.com/photo-1545239351-1141bd82e8a6?auto=format&fit=crop&w=800&q=60",
+    },
+    price: 6300,
+    location: "Punnamada, Alappuzha",
+    country: "India",
+    reviews: [],
+    categories: ["lakefront", "tropical", "amazing pools"],
+  },
+
+  // 33
+  {
+    title: "Cliffside Boho Stay in Varkala",
+    description: "Boho rooms overlooking the Arabian Sea from the North Cliff.",
+    image: {
+      fileName: "varkala_cliff",
+      url: "https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=800&q=60",
+    },
+    price: 2900,
+    location: "North Cliff, Varkala",
+    country: "India",
+    reviews: [],
+    categories: ["beachfront", "tropical"],
+  },
+
+  // 34
+  {
+    title: "French Colonial Villa in White Town",
+    description:
+      "A restored French villa with arches, courtyards and pastel interiors.",
+    image: {
+      fileName: "pondy_white_town",
+      url: "https://images.unsplash.com/photo-1519710164239-da123dc03ef4?auto=format&fit=crop&w=800&q=60",
+    },
+    price: 5200,
+    location: "White Town, Puducherry",
+    country: "India",
+    reviews: [],
+    categories: ["entire homes", "iconic cities"],
+  },
+
+  // 35
+  {
+    title: "Forest Resort in Jim Corbett",
+    description: "A wildlife resort with cottages surrounded by dense forest.",
+    image: {
+      fileName: "corbett_resort",
+      url: "https://images.unsplash.com/photo-1518831959410-48a934f51e86?auto=format&fit=crop&w=800&q=60",
+    },
+    price: 4500,
+    location: "Dhikuli, Ramnagar",
+    country: "India",
+    reviews: [],
+    categories: ["farms", "camping"],
+  },
+
+  // 36
+  {
+    title: "High-Altitude Campsite in Spiti Valley",
+    description:
+      "A scenic campsite with tents offering panoramic Himalayan views.",
+    image: {
+      fileName: "spiti_camp",
+      url: "https://images.unsplash.com/photo-1470246973918-29a93221c455?auto=format&fit=crop&w=800&q=60",
+    },
+    price: 2300,
+    location: "Kaza, Spiti Valley",
+    country: "India",
+    reviews: [],
+    categories: ["arctic", "camping"],
+  },
+
+  // 37
+  {
+    title: "Luxury Tent in Ranthambore",
+    description:
+      "Jungle luxury tents with all modern amenities near Ranthambore National Park.",
+    image: {
+      fileName: "ranthambore_luxury",
+      url: "https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=800&q=60",
+    },
+    price: 7800,
+    location: "Ranthambore Road, Sawai Madhopur",
+    country: "India",
+    reviews: [],
+    categories: ["luxury", "camping"],
+  },
+
+  // 38
+  {
+    title: "Hill Resort in Ooty",
+    description:
+      "A scenic hill resort surrounded by tea estates and cool breezes.",
+    image: {
+      fileName: "ooty_hillresort",
+      url: "https://images.unsplash.com/photo-1500534314211-0a24cd03f2c0?auto=format&fit=crop&w=800&q=60",
+    },
+    price: 3400,
+    location: "Charing Cross, Ooty",
+    country: "India",
+    reviews: [],
+    categories: ["mountains"],
+  },
+
+  // 39
+  {
+    title: "Monsoon Retreat in Lonavala",
+    description:
+      "Private retreat surrounded by greenery, perfect for monsoon getaways.",
+    image: {
+      fileName: "lonavala_retreat",
+      url: "https://images.unsplash.com/photo-1590496793130-42a996133562?auto=format&fit=crop&w=800&q=60",
+    },
+    price: 5600,
+    location: "Tiger Point Road, Lonavala",
+    country: "India",
+    reviews: [],
+    categories: ["mountains", "entire homes"],
+  },
+
+  // 40
+  {
+    title: "Strawberry Farm Stay in Mahabaleshwar",
+    description: "A homestay surrounded by strawberry farms and valley views.",
+    image: {
+      fileName: "mahabaleshwar_farm",
+      url: "https://images.unsplash.com/photo-1519817650390-64a93db511aa?auto=format&fit=crop&w=800&q=60",
+    },
+    price: 3800,
+    location: "Panchgani Road, Mahabaleshwar",
+    country: "India",
+    reviews: [],
+    categories: ["farms", "mountains"],
+  },
+
+  // 41
+  {
+    title: "Island Resort in Havelock",
+    description: "A tropical resort near pristine beaches with coral reefs.",
+    image: {
+      fileName: "havelock_resort",
+      url: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=60",
+    },
+    price: 9200,
+    location: "Govind Nagar, Havelock Island",
+    country: "India",
+    reviews: [],
+    categories: ["islands", "tropical", "beachfront"],
+  },
+
+  // 42
+  {
+    title: "Beachfront Cottage in Neil Island",
+    description:
+      "Cozy beachfront cottage with hammocks and quiet ocean breeze.",
+    image: {
+      fileName: "neil_beach_cottage",
+      url: "https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?auto=format&fit=crop&w=800&q=60",
+    },
+    price: 5200,
+    location: "Bharatpur Beach, Neil Island",
+    country: "India",
+    reviews: [],
+    categories: ["islands", "beachfront"],
+  },
+
+  // 43
+  {
+    title: "Ghat View Homestay in Varanasi",
+    description:
+      "Peaceful homestay with Ganga ghat views and walkable distance to evening aarti.",
+    image: {
+      fileName: "varanasi_ghat_homestay",
+      url: "https://images.unsplash.com/photo-1582571352032-448f7928eca5?auto=format&fit=crop&w=800&q=60",
+    },
+    price: 2600,
+    location: "Assi Ghat, Varanasi",
+    country: "India",
+    reviews: [],
+    categories: ["iconic cities"],
+  },
+
+  // 44
+  {
+    title: "Budget Hotel in Connaught Place",
+    description:
+      "Clean AC rooms in the heart of CP with metro access and shopping hubs nearby.",
+    image: {
+      fileName: "cp_budget_hotel",
+      url: "https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&w=800&q=60",
+    },
+    price: 2100,
+    location: "Connaught Place, Delhi",
+    country: "India",
+    reviews: [],
+    categories: ["iconic cities", "trending"],
+  },
+
+  // 45
+  {
+    title: "Airport Hotel in Aerocity",
+    description: "Modern hotel with soundproof rooms near Delhi Airport.",
+    image: {
+      fileName: "aerocity_airport",
+      url: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=800&q=60",
+    },
+    price: 6500,
+    location: "Aerocity, Delhi",
+    country: "India",
+    reviews: [],
+    categories: ["luxury", "iconic cities"],
+  },
+
+  // 46
+  {
+    title: "IT Corridor Stay in Gachibowli",
+    description: "A serviced apartment located in Hyderabad’s IT corridor.",
+    image: {
+      fileName: "gachibowli_service",
+      url: "https://images.unsplash.com/photo-1520256862855-398228c41684?auto=format&fit=crop&w=800&q=60",
+    },
+    price: 3300,
+    location: "Gachibowli, Hyderabad",
+    country: "India",
+    reviews: [],
+    categories: ["entire homes", "iconic cities"],
+  },
+
+  // 47
+  {
+    title: "Studio Apartment in Hinjewadi",
+    description: "A smart studio apartment near Pune’s IT Park.",
+    image: {
+      fileName: "hinjewadi_studio",
+      url: "https://images.unsplash.com/photo-1505691723518-36a5ac3be353?auto=format&fit=crop&w=800&q=60",
+    },
+    price: 2600,
+    location: "Hinjewadi, Pune",
+    country: "India",
+    reviews: [],
+    categories: ["entire homes", "iconic cities"],
+  },
+
+  // 48
+  {
+    title: "Heritage Haveli in Old City",
+    description: "A traditional haveli surrounded by Udaipur’s historic lanes.",
+    image: {
+      fileName: "udaipur_oldcity_haveli",
+      url: "https://images.unsplash.com/photo-1562184760-262fdd53b05e?auto=format&fit=crop&w=800&q=60",
+    },
+    price: 3600,
+    location: "Old City, Udaipur",
+    country: "India",
+    reviews: [],
+    categories: ["castles", "entire homes"],
+  },
+
+  // 49
+  {
+    title: "Luxury Wildlife Resort in Kabini",
+    description:
+      "A premium wildlife resort near Kabini backwaters with safari tours.",
+    image: {
+      fileName: "kabini_luxury",
+      url: "https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=800&q=60",
+    },
+    price: 14000,
+    location: "Kabini Backwaters, Karnataka",
+    country: "India",
+    reviews: [],
+    categories: ["luxury", "farms", "amazing pools"],
+  },
+
+  // 50
+  {
+    title: "Eco Jungle Lodge in Kanha",
+    description:
+      "An eco-friendly lodge surrounded by pristine forest near Kanha National Park.",
+    image: {
+      fileName: "kanha_jungle",
+      url: "https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=800&q=60",
+    },
+    price: 5300,
+    location: "Mukki Gate, Kanha",
+    country: "India",
+    reviews: [],
+    categories: ["farms", "camping", "mountains"],
   },
 ];
 
